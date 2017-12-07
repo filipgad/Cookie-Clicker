@@ -9,6 +9,41 @@ document.addEventListener('DOMContentLoaded', function() {
     }
   }
 
+  class Cursor extends React.Component {
+    constructor(props) {
+      super(props);
+      this.state = {
+        numberOfElements: 0,
+        cookiesToActiveBtn: 50
+      }
+    }
+
+    clickCursor = () => {
+      this.setState({
+        numberOfElements: this.state.numberOfElements + 1,
+        cookiesToActiveBtn: this.state.cookiesToActiveBtn * (this.state.numberOfElements*2)
+      });
+    }
+
+    render() {
+
+      return (
+        this.props.score > this.state.cookiesToActiveBtn ?
+          <button className="cursor storeBtn" onClick={this.clickCursor}>Cursor, you have: {this.state.numberOfElements} cursors</button>
+        :
+          <button className="cursor storeBtn" disabled onClick={this.clickCursor}>Cursor, you have: {this.state.numberOfElements} cursors</button>
+      );
+    }
+  }
+
+  class Store extends React.Component {
+    render() {
+      return (
+        <Cursor score={this.props.score} />
+      );
+    }
+  }
+
   class Game extends React.Component {
     constructor(props) {
       super(props);
@@ -23,11 +58,14 @@ document.addEventListener('DOMContentLoaded', function() {
       });
     }
 
+
+
     render() {
       return (
         <div>
           <Cookie onClick={this.handleClick} />
           <h1>{this.state.score}</h1>
+          <Store score={this.state.score}/>
         </div>
       );
     }
