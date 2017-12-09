@@ -14,24 +14,25 @@ document.addEventListener('DOMContentLoaded', function() {
       super(props);
       this.state = {
         numberOfElements: 0,
-        cookiesToActiveBtn: 50
+        cookiesToActiveBtn: 5
       }
     }
 
     clickCursor = () => {
       this.setState({
         numberOfElements: this.state.numberOfElements + 1,
-        cookiesToActiveBtn: this.state.cookiesToActiveBtn * (this.state.numberOfElements*2)
+        cookiesToActiveBtn: this.state.cookiesToActiveBtn * 2
       });
+      console.log(this.state.cookiesToActiveBtn);
     }
 
     render() {
 
       return (
-        this.props.score > this.state.cookiesToActiveBtn ?
-          <button className="cursor storeBtn" onClick={this.clickCursor}>Cursor, you have: {this.state.numberOfElements} cursors</button>
+        this.props.score >= this.state.cookiesToActiveBtn ?
+          <button className="cursor storeBtn" onClick={this.clickCursor}>CURSOR! You have: {this.state.numberOfElements} cursors. For next you need: {this.state.cookiesToActiveBtn} cookies.</button>
         :
-          <button className="cursor storeBtn" disabled onClick={this.clickCursor}>Cursor, you have: {this.state.numberOfElements} cursors</button>
+          <button className="cursor storeBtn" disabled onClick={this.clickCursor}>CURSOR! You have: {this.state.numberOfElements} cursors. For next you need: {this.state.cookiesToActiveBtn} cookies.</button>
       );
     }
   }
