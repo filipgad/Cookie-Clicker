@@ -14,7 +14,7 @@ document.addEventListener('DOMContentLoaded', function() {
   class Producer extends React.Component {
     render() {
 
-      // add class with producer name
+      // to add class with producer name
       let classList = [this.props.name.toLowerCase(), 'storeBtn'];
       let className = classList.join(' ');
 
@@ -32,7 +32,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     render() {
       return (
-        <div>
+        <div className="store">
           <Producer name="Cursor" numberOfCookies={this.props.numberOfCookies} clickBtn={this.props.clickCursor} numberOfElements={this.props.numberOfCursors} toActiveBtn={this.props.toActiveCursor}/>
           <Producer name="Grandma" numberOfCookies={this.props.numberOfCookies} clickBtn={this.props.clickGrandma} numberOfElements={this.props.numberOfGrandmas} toActiveBtn={this.props.toActiveGrandma}/>
           <Producer name="Farm" numberOfCookies={this.props.numberOfCookies} clickBtn={this.props.clickFarm} numberOfElements={this.props.numberOfFarms} toActiveBtn={this.props.toActiveFarm}/>
@@ -47,7 +47,7 @@ document.addEventListener('DOMContentLoaded', function() {
   class ScoreBoard extends React.Component {
     render() {
       return (
-        <div>
+        <div className="scoreBoard">
           <h1>You have now: {this.props.numberOfCookies} cookies</h1>
           <p>You produce {this.props.producePerSec} cookies per second</p>
           <h2>You have already made {this.props.cookiesMade} cookies</h2>
@@ -65,15 +65,33 @@ document.addEventListener('DOMContentLoaded', function() {
         cookiesMade: 0, // stores the number of cookies produced
         numberOfCursors: 0, // each numberOf... stores the number of producers we have bought
         toActiveCursor: 5, // each toActive... stores the number of points we need to activate the producer
+        cookiesCursor: 0, // each cookies... stores the number of cookies produced by producer per second
         numberOfGrandmas: 0,
         toActiveGrandma: 50,
+        cookiesGrandma: 0,
         numberOfFarms:0,
         toActiveFarm: 100,
+        cookiesFarm: 0,
         numberOfBakeries: 0,
         toActiveBakery: 200,
+        cookiesBakery: 0,
         numberOfMines: 0,
-        toActiveMine: 400
+        toActiveMine: 400,
+        cookiesMine: 0
       }
+    }
+
+    componentWillMount() {
+      this.intervalId = setInterval( () => {
+        this.setState({
+          numberOfCookies: this.state.numberOfCookies + (this.state.cookiesCursor + this.state.cookiesGrandma + this.state.cookiesFarm + this.state.cookiesBakery + this.state.cookiesMine),
+          cookiesMade: this.state.cookiesMade + (this.state.cookiesCursor + this.state.cookiesGrandma + this.state.cookiesFarm + this.state.cookiesBakery + this.state.cookiesMine)
+        });
+      }, 1000);
+    }
+
+    componentWillUnmount() {
+      clearInterval(this.intervalId);
     }
 
     handleClick = () => {
@@ -87,7 +105,9 @@ document.addEventListener('DOMContentLoaded', function() {
       this.setState({
         numberOfCursors: this.state.numberOfCursors + 1,
         toActiveCursor: this.state.toActiveCursor * 2,
-        numberOfCookies: this.state.numberOfCookies - this.state.toActiveCursor
+        numberOfCookies: this.state.numberOfCookies - this.state.toActiveCursor,
+        cookiesCursor: this.state.cookiesCursor + 1,
+        producePerSec: this.state.producePerSec + 1
       });
     }
 
@@ -95,7 +115,9 @@ document.addEventListener('DOMContentLoaded', function() {
       this.setState({
         numberOfGrandmas: this.state.numberOfGrandmas + 1,
         toActiveGrandma: this.state.toActiveGrandma * 2,
-        numberOfCookies: this.state.numberOfCookies - this.state.toActiveGrandma
+        numberOfCookies: this.state.numberOfCookies - this.state.toActiveGrandma,
+        cookiesGrandma: this.state.cookiesGrandma + 2,
+        producePerSec: this.state.producePerSec + 2
       });
     }
 
@@ -103,7 +125,9 @@ document.addEventListener('DOMContentLoaded', function() {
       this.setState({
         numberOfFarms: this.state.numberOfFarms + 1,
         toActiveFarm: this.state.toActiveFarm * 2,
-        numberOfCookies: this.state.numberOfCookies - this.state.toActiveFarm
+        numberOfCookies: this.state.numberOfCookies - this.state.toActiveFarm,
+        cookiesFarm: this.state.cookiesFarm + 4,
+        producePerSec: this.state.producePerSec + 4
       });
     }
 
@@ -111,7 +135,9 @@ document.addEventListener('DOMContentLoaded', function() {
       this.setState({
         numberOfBakeries: this.state.numberOfBakeries + 1,
         toActiveBakery: this.state.toActiveBakery * 2,
-        numberOfCookies: this.state.numberOfCookies - this.state.toActiveBakery
+        numberOfCookies: this.state.numberOfCookies - this.state.toActiveBakery,
+        cookiesBakery: this.state.cookiesBakery + 8,
+        producePerSec: this.state.producePerSec + 8
       });
     }
 
@@ -119,7 +145,9 @@ document.addEventListener('DOMContentLoaded', function() {
       this.setState({
         numberOfMines: this.state.numberOfMines + 1,
         toActiveMine: this.state.toActiveMine * 2,
-        numberOfCookies: this.state.numberOfCookies - this.state.toActiveMine
+        numberOfCookies: this.state.numberOfCookies - this.state.toActiveMine,
+        cookiesMine: this.state.cookiesMine + 16,
+        producePerSec: this.state.producePerSec + 16
       });
     }
 
@@ -142,7 +170,7 @@ document.addEventListener('DOMContentLoaded', function() {
       } = this.state;
 
       return (
-        <div>
+        <div className="game">
           <ScoreBoard numberOfCookies={numberOfCookies} producePerSec={producePerSec} cookiesMade={cookiesMade}  />
           <Cookie onClick={this.handleClick} />
           <Store
@@ -163,7 +191,6 @@ document.addEventListener('DOMContentLoaded', function() {
       );
     }
   }
-
 
     ReactDOM.render(
       <App />,
