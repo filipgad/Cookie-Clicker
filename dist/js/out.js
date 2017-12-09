@@ -9598,6 +9598,8 @@ module.exports = __webpack_require__(185);
 "use strict";
 
 
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
 var _react = __webpack_require__(83);
 
 var _react2 = _interopRequireDefault(_react);
@@ -9608,13 +9610,325 @@ var _reactDom2 = _interopRequireDefault(_reactDom);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
 document.addEventListener('DOMContentLoaded', function () {
 
-  _reactDom2.default.render(_react2.default.createElement(
-    'h1',
-    null,
-    'Hello, world'
-  ), document.getElementById('app'));
+  // Cookie to click
+  var Cookie = function (_React$Component) {
+    _inherits(Cookie, _React$Component);
+
+    function Cookie() {
+      _classCallCheck(this, Cookie);
+
+      return _possibleConstructorReturn(this, (Cookie.__proto__ || Object.getPrototypeOf(Cookie)).apply(this, arguments));
+    }
+
+    _createClass(Cookie, [{
+      key: 'render',
+      value: function render() {
+        return _react2.default.createElement(
+          'button',
+          { className: 'cookie', onClick: this.props.onClick },
+          'Cookie'
+        );
+      }
+    }]);
+
+    return Cookie;
+  }(_react2.default.Component);
+
+  // Button with producer
+
+
+  var Producer = function (_React$Component2) {
+    _inherits(Producer, _React$Component2);
+
+    function Producer() {
+      _classCallCheck(this, Producer);
+
+      return _possibleConstructorReturn(this, (Producer.__proto__ || Object.getPrototypeOf(Producer)).apply(this, arguments));
+    }
+
+    _createClass(Producer, [{
+      key: 'render',
+      value: function render() {
+
+        // to add class with producer name
+        var classList = [this.props.name.toLowerCase(), 'storeBtn'];
+        var className = classList.join(' ');
+
+        return this.props.numberOfCookies >= this.props.toActiveBtn ? _react2.default.createElement(
+          'button',
+          { className: className, onClick: this.props.clickBtn },
+          this.props.name,
+          '! You have: ',
+          this.props.numberOfElements,
+          ' ',
+          this.props.name,
+          's. For next you need: ',
+          this.props.toActiveBtn,
+          ' cookies.'
+        ) : _react2.default.createElement(
+          'button',
+          { className: className, disabled: true, onClick: this.props.clickBtn },
+          this.props.name,
+          '! You have: ',
+          this.props.numberOfElements,
+          ' ',
+          this.props.name,
+          's. For next you need: ',
+          this.props.toActiveBtn,
+          ' cookies.'
+        );
+      }
+    }]);
+
+    return Producer;
+  }(_react2.default.Component);
+
+  // Shop with producers
+
+
+  var Store = function (_React$Component3) {
+    _inherits(Store, _React$Component3);
+
+    function Store() {
+      _classCallCheck(this, Store);
+
+      return _possibleConstructorReturn(this, (Store.__proto__ || Object.getPrototypeOf(Store)).apply(this, arguments));
+    }
+
+    _createClass(Store, [{
+      key: 'render',
+      value: function render() {
+        return _react2.default.createElement(
+          'div',
+          { className: 'store' },
+          _react2.default.createElement(Producer, { name: 'Cursor', numberOfCookies: this.props.numberOfCookies, clickBtn: this.props.clickCursor, numberOfElements: this.props.numberOfCursors, toActiveBtn: this.props.toActiveCursor }),
+          _react2.default.createElement(Producer, { name: 'Grandma', numberOfCookies: this.props.numberOfCookies, clickBtn: this.props.clickGrandma, numberOfElements: this.props.numberOfGrandmas, toActiveBtn: this.props.toActiveGrandma }),
+          _react2.default.createElement(Producer, { name: 'Farm', numberOfCookies: this.props.numberOfCookies, clickBtn: this.props.clickFarm, numberOfElements: this.props.numberOfFarms, toActiveBtn: this.props.toActiveFarm }),
+          _react2.default.createElement(Producer, { name: 'Bakery', numberOfCookies: this.props.numberOfCookies, clickBtn: this.props.clickBakery, numberOfElements: this.props.numberOfBakeries, toActiveBtn: this.props.toActiveBakery }),
+          _react2.default.createElement(Producer, { name: 'Mine', numberOfCookies: this.props.numberOfCookies, clickBtn: this.props.clickMine, numberOfElements: this.props.numberOfMines, toActiveBtn: this.props.toActiveMine })
+        );
+      }
+    }]);
+
+    return Store;
+  }(_react2.default.Component);
+
+  // Board with all scores: cookies now, all cookies, cookies per second
+
+
+  var ScoreBoard = function (_React$Component4) {
+    _inherits(ScoreBoard, _React$Component4);
+
+    function ScoreBoard() {
+      _classCallCheck(this, ScoreBoard);
+
+      return _possibleConstructorReturn(this, (ScoreBoard.__proto__ || Object.getPrototypeOf(ScoreBoard)).apply(this, arguments));
+    }
+
+    _createClass(ScoreBoard, [{
+      key: 'render',
+      value: function render() {
+        return _react2.default.createElement(
+          'div',
+          { className: 'scoreBoard' },
+          _react2.default.createElement(
+            'h1',
+            null,
+            'You have now: ',
+            this.props.numberOfCookies,
+            ' cookies'
+          ),
+          _react2.default.createElement(
+            'p',
+            null,
+            'You produce ',
+            this.props.producePerSec,
+            ' cookies per second'
+          ),
+          _react2.default.createElement(
+            'h2',
+            null,
+            'You have already made ',
+            this.props.cookiesMade,
+            ' cookies'
+          )
+        );
+      }
+    }]);
+
+    return ScoreBoard;
+  }(_react2.default.Component);
+
+  var Game = function (_React$Component5) {
+    _inherits(Game, _React$Component5);
+
+    function Game(props) {
+      _classCallCheck(this, Game);
+
+      var _this5 = _possibleConstructorReturn(this, (Game.__proto__ || Object.getPrototypeOf(Game)).call(this, props));
+
+      _this5.handleClick = function () {
+        _this5.setState({
+          cookiesMade: _this5.state.cookiesMade + 1,
+          numberOfCookies: _this5.state.numberOfCookies + 1
+        });
+      };
+
+      _this5.clickCursor = function () {
+        _this5.setState({
+          numberOfCursors: _this5.state.numberOfCursors + 1,
+          toActiveCursor: _this5.state.toActiveCursor * 2,
+          numberOfCookies: _this5.state.numberOfCookies - _this5.state.toActiveCursor,
+          cookiesCursor: _this5.state.cookiesCursor + 1,
+          producePerSec: _this5.state.producePerSec + 1
+        });
+      };
+
+      _this5.clickGrandma = function () {
+        _this5.setState({
+          numberOfGrandmas: _this5.state.numberOfGrandmas + 1,
+          toActiveGrandma: _this5.state.toActiveGrandma * 2,
+          numberOfCookies: _this5.state.numberOfCookies - _this5.state.toActiveGrandma,
+          cookiesGrandma: _this5.state.cookiesGrandma + 2,
+          producePerSec: _this5.state.producePerSec + 2
+        });
+      };
+
+      _this5.clickFarm = function () {
+        _this5.setState({
+          numberOfFarms: _this5.state.numberOfFarms + 1,
+          toActiveFarm: _this5.state.toActiveFarm * 2,
+          numberOfCookies: _this5.state.numberOfCookies - _this5.state.toActiveFarm,
+          cookiesFarm: _this5.state.cookiesFarm + 4,
+          producePerSec: _this5.state.producePerSec + 4
+        });
+      };
+
+      _this5.clickBakery = function () {
+        _this5.setState({
+          numberOfBakeries: _this5.state.numberOfBakeries + 1,
+          toActiveBakery: _this5.state.toActiveBakery * 2,
+          numberOfCookies: _this5.state.numberOfCookies - _this5.state.toActiveBakery,
+          cookiesBakery: _this5.state.cookiesBakery + 8,
+          producePerSec: _this5.state.producePerSec + 8
+        });
+      };
+
+      _this5.clickMine = function () {
+        _this5.setState({
+          numberOfMines: _this5.state.numberOfMines + 1,
+          toActiveMine: _this5.state.toActiveMine * 2,
+          numberOfCookies: _this5.state.numberOfCookies - _this5.state.toActiveMine,
+          cookiesMine: _this5.state.cookiesMine + 16,
+          producePerSec: _this5.state.producePerSec + 16
+        });
+      };
+
+      _this5.state = {
+        numberOfCookies: 0, // stores the current number of cookies
+        producePerSec: 0, // stores the number of produced cookies per second
+        cookiesMade: 0, // stores the number of cookies produced
+        numberOfCursors: 0, // each numberOf... stores the number of producers we have bought
+        toActiveCursor: 5, // each toActive... stores the number of points we need to activate the producer
+        cookiesCursor: 0, // each cookies... stores the number of cookies produced by producer per second
+        numberOfGrandmas: 0,
+        toActiveGrandma: 50,
+        cookiesGrandma: 0,
+        numberOfFarms: 0,
+        toActiveFarm: 100,
+        cookiesFarm: 0,
+        numberOfBakeries: 0,
+        toActiveBakery: 200,
+        cookiesBakery: 0,
+        numberOfMines: 0,
+        toActiveMine: 400,
+        cookiesMine: 0
+      };
+      return _this5;
+    }
+
+    _createClass(Game, [{
+      key: 'componentWillMount',
+      value: function componentWillMount() {
+        var _this6 = this;
+
+        this.intervalId = setInterval(function () {
+          _this6.setState({
+            numberOfCookies: _this6.state.numberOfCookies + (_this6.state.cookiesCursor + _this6.state.cookiesGrandma + _this6.state.cookiesFarm + _this6.state.cookiesBakery + _this6.state.cookiesMine),
+            cookiesMade: _this6.state.cookiesMade + (_this6.state.cookiesCursor + _this6.state.cookiesGrandma + _this6.state.cookiesFarm + _this6.state.cookiesBakery + _this6.state.cookiesMine)
+          });
+        }, 1000);
+      }
+    }, {
+      key: 'componentWillUnmount',
+      value: function componentWillUnmount() {
+        clearInterval(this.intervalId);
+      }
+    }, {
+      key: 'render',
+      value: function render() {
+        var _state = this.state,
+            numberOfCookies = _state.numberOfCookies,
+            producePerSec = _state.producePerSec,
+            cookiesMade = _state.cookiesMade,
+            numberOfCursors = _state.numberOfCursors,
+            toActiveCursor = _state.toActiveCursor,
+            numberOfGrandmas = _state.numberOfGrandmas,
+            toActiveGrandma = _state.toActiveGrandma,
+            numberOfFarms = _state.numberOfFarms,
+            toActiveFarm = _state.toActiveFarm,
+            numberOfBakeries = _state.numberOfBakeries,
+            toActiveBakery = _state.toActiveBakery,
+            numberOfMines = _state.numberOfMines,
+            toActiveMine = _state.toActiveMine;
+
+
+        return _react2.default.createElement(
+          'div',
+          { className: 'game' },
+          _react2.default.createElement(ScoreBoard, { numberOfCookies: numberOfCookies, producePerSec: producePerSec, cookiesMade: cookiesMade }),
+          _react2.default.createElement(Cookie, { onClick: this.handleClick }),
+          _react2.default.createElement(Store, {
+            numberOfCookies: numberOfCookies,
+            clickCursor: this.clickCursor, clickGrandma: this.clickGrandma, clickFarm: this.clickFarm, clickBakery: this.clickBakery, clickMine: this.clickMine,
+            numberOfCursors: numberOfCursors, numberOfGrandmas: numberOfGrandmas, numberOfFarms: numberOfFarms, numberOfBakeries: numberOfBakeries, numberOfMines: numberOfMines,
+            toActiveCursor: toActiveCursor, toActiveGrandma: toActiveGrandma, toActiveFarm: toActiveFarm, toActiveBakery: toActiveBakery, toActiveMine: toActiveMine
+          })
+        );
+      }
+    }]);
+
+    return Game;
+  }(_react2.default.Component);
+
+  var App = function (_React$Component6) {
+    _inherits(App, _React$Component6);
+
+    function App() {
+      _classCallCheck(this, App);
+
+      return _possibleConstructorReturn(this, (App.__proto__ || Object.getPrototypeOf(App)).apply(this, arguments));
+    }
+
+    _createClass(App, [{
+      key: 'render',
+      value: function render() {
+        return _react2.default.createElement(Game, null);
+      }
+    }]);
+
+    return App;
+  }(_react2.default.Component);
+
+  _reactDom2.default.render(_react2.default.createElement(App, null), document.getElementById('app'));
 });
 
 /***/ }),
