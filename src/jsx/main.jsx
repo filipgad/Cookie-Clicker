@@ -18,11 +18,15 @@ document.addEventListener('DOMContentLoaded', function() {
       let classList = [this.props.name.toLowerCase(), 'storeBtn'];
       let className = classList.join(' ');
 
+      // text in button
+      const producerBtnContent = <p>{this.props.name}! You have: {this.props.numberOfElements} {this.props.name}s. Each {this.props.name} produces {this.props.producePerSec} cookies per second. For next you need: {this.props.toActiveBtn} cookies.</p>;
+
       return (
-        this.props.numberOfCookies >= this.props.toActiveBtn ?
-          <button className={className} onClick={this.props.clickBtn}>{this.props.name}! You have: {this.props.numberOfElements} {this.props.name}s. Each {this.props.name} produces {this.props.producePerSec} cookies per second. For next you need: {this.props.toActiveBtn} cookies.</button>
+        this.props.numberOfCookies >= this.props.toActiveBtn
+        ?
+          <button className={className} onClick={this.props.clickBtn}>{producerBtnContent}</button>
         :
-          <button className={className} disabled onClick={this.props.clickBtn}>{this.props.name}! You have: {this.props.numberOfElements} {this.props.name}s. Each {this.props.name} produces {this.props.producePerSec} cookies per second. For next you need: {this.props.toActiveBtn} cookies.</button>
+          <button className={className} disabled onClick={this.props.clickBtn}>{producerBtnContent}</button>
       );
     }
   }
@@ -48,7 +52,7 @@ document.addEventListener('DOMContentLoaded', function() {
     render() {
       return (
         <div className="scoreBoard">
-          <h1>You have now: {this.props.numberOfCookies} cookies</h1>
+          <h1>Now you have: {this.props.numberOfCookies} cookies</h1>
           <p>You produce {this.props.producePerSec} cookies per second</p>
           <h2>You have already made {this.props.cookiesMade} cookies</h2>
         </div>
@@ -81,7 +85,7 @@ document.addEventListener('DOMContentLoaded', function() {
       }
     }
 
-    componentWillMount() {
+    componentDidMount() {
       this.intervalId = setInterval( () => {
         this.setState({
           numberOfCookies: this.state.numberOfCookies + (this.state.cookiesCursor + this.state.cookiesGrandma + this.state.cookiesFarm + this.state.cookiesBakery + this.state.cookiesMine),
