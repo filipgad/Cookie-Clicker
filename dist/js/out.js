@@ -9662,28 +9662,32 @@ document.addEventListener('DOMContentLoaded', function () {
         var classList = [this.props.name.toLowerCase(), 'storeBtn'];
         var className = classList.join(' ');
 
+        // text in button
+        var producerBtnContent = _react2.default.createElement(
+          'p',
+          null,
+          this.props.name,
+          '! You have: ',
+          this.props.numberOfElements,
+          ' ',
+          this.props.name,
+          's. Each ',
+          this.props.name,
+          ' produces ',
+          this.props.producePerSec,
+          ' cookies per second. For next you need: ',
+          this.props.toActiveBtn,
+          ' cookies.'
+        );
+
         return this.props.numberOfCookies >= this.props.toActiveBtn ? _react2.default.createElement(
           'button',
           { className: className, onClick: this.props.clickBtn },
-          this.props.name,
-          '! You have: ',
-          this.props.numberOfElements,
-          ' ',
-          this.props.name,
-          's. For next you need: ',
-          this.props.toActiveBtn,
-          ' cookies.'
+          producerBtnContent
         ) : _react2.default.createElement(
           'button',
           { className: className, disabled: true, onClick: this.props.clickBtn },
-          this.props.name,
-          '! You have: ',
-          this.props.numberOfElements,
-          ' ',
-          this.props.name,
-          's. For next you need: ',
-          this.props.toActiveBtn,
-          ' cookies.'
+          producerBtnContent
         );
       }
     }]);
@@ -9709,11 +9713,11 @@ document.addEventListener('DOMContentLoaded', function () {
         return _react2.default.createElement(
           'div',
           { className: 'store' },
-          _react2.default.createElement(Producer, { name: 'Cursor', numberOfCookies: this.props.numberOfCookies, clickBtn: this.props.clickCursor, numberOfElements: this.props.numberOfCursors, toActiveBtn: this.props.toActiveCursor }),
-          _react2.default.createElement(Producer, { name: 'Grandma', numberOfCookies: this.props.numberOfCookies, clickBtn: this.props.clickGrandma, numberOfElements: this.props.numberOfGrandmas, toActiveBtn: this.props.toActiveGrandma }),
-          _react2.default.createElement(Producer, { name: 'Farm', numberOfCookies: this.props.numberOfCookies, clickBtn: this.props.clickFarm, numberOfElements: this.props.numberOfFarms, toActiveBtn: this.props.toActiveFarm }),
-          _react2.default.createElement(Producer, { name: 'Bakery', numberOfCookies: this.props.numberOfCookies, clickBtn: this.props.clickBakery, numberOfElements: this.props.numberOfBakeries, toActiveBtn: this.props.toActiveBakery }),
-          _react2.default.createElement(Producer, { name: 'Mine', numberOfCookies: this.props.numberOfCookies, clickBtn: this.props.clickMine, numberOfElements: this.props.numberOfMines, toActiveBtn: this.props.toActiveMine })
+          _react2.default.createElement(Producer, { name: 'Cursor', numberOfCookies: this.props.numberOfCookies, clickBtn: this.props.clickCursor, numberOfElements: this.props.numberOfCursors, toActiveBtn: this.props.toActiveCursor, producePerSec: this.props.cookiesCursor }),
+          _react2.default.createElement(Producer, { name: 'Grandma', numberOfCookies: this.props.numberOfCookies, clickBtn: this.props.clickGrandma, numberOfElements: this.props.numberOfGrandmas, toActiveBtn: this.props.toActiveGrandma, producePerSec: this.props.cookiesGrandma }),
+          _react2.default.createElement(Producer, { name: 'Farm', numberOfCookies: this.props.numberOfCookies, clickBtn: this.props.clickFarm, numberOfElements: this.props.numberOfFarms, toActiveBtn: this.props.toActiveFarm, producePerSec: this.props.cookiesFarm }),
+          _react2.default.createElement(Producer, { name: 'Bakery', numberOfCookies: this.props.numberOfCookies, clickBtn: this.props.clickBakery, numberOfElements: this.props.numberOfBakeries, toActiveBtn: this.props.toActiveBakery, producePerSec: this.props.cookiesBakery }),
+          _react2.default.createElement(Producer, { name: 'Mine', numberOfCookies: this.props.numberOfCookies, clickBtn: this.props.clickMine, numberOfElements: this.props.numberOfMines, toActiveBtn: this.props.toActiveMine, producePerSec: this.props.cookiesMine })
         );
       }
     }]);
@@ -9742,7 +9746,7 @@ document.addEventListener('DOMContentLoaded', function () {
           _react2.default.createElement(
             'h1',
             null,
-            'You have now: ',
+            'Now you have: ',
             this.props.numberOfCookies,
             ' cookies'
           ),
@@ -9856,8 +9860,8 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     _createClass(Game, [{
-      key: 'componentWillMount',
-      value: function componentWillMount() {
+      key: 'componentDidMount',
+      value: function componentDidMount() {
         var _this6 = this;
 
         this.intervalId = setInterval(function () {
@@ -9881,14 +9885,19 @@ document.addEventListener('DOMContentLoaded', function () {
             cookiesMade = _state.cookiesMade,
             numberOfCursors = _state.numberOfCursors,
             toActiveCursor = _state.toActiveCursor,
+            cookiesCursor = _state.cookiesCursor,
             numberOfGrandmas = _state.numberOfGrandmas,
             toActiveGrandma = _state.toActiveGrandma,
+            cookiesGrandma = _state.cookiesGrandma,
             numberOfFarms = _state.numberOfFarms,
             toActiveFarm = _state.toActiveFarm,
+            cookiesFarm = _state.cookiesFarm,
             numberOfBakeries = _state.numberOfBakeries,
             toActiveBakery = _state.toActiveBakery,
+            cookiesBakery = _state.cookiesBakery,
             numberOfMines = _state.numberOfMines,
-            toActiveMine = _state.toActiveMine;
+            toActiveMine = _state.toActiveMine,
+            cookiesMine = _state.cookiesMine;
 
 
         return _react2.default.createElement(
@@ -9900,7 +9909,8 @@ document.addEventListener('DOMContentLoaded', function () {
             numberOfCookies: numberOfCookies,
             clickCursor: this.clickCursor, clickGrandma: this.clickGrandma, clickFarm: this.clickFarm, clickBakery: this.clickBakery, clickMine: this.clickMine,
             numberOfCursors: numberOfCursors, numberOfGrandmas: numberOfGrandmas, numberOfFarms: numberOfFarms, numberOfBakeries: numberOfBakeries, numberOfMines: numberOfMines,
-            toActiveCursor: toActiveCursor, toActiveGrandma: toActiveGrandma, toActiveFarm: toActiveFarm, toActiveBakery: toActiveBakery, toActiveMine: toActiveMine
+            toActiveCursor: toActiveCursor, toActiveGrandma: toActiveGrandma, toActiveFarm: toActiveFarm, toActiveBakery: toActiveBakery, toActiveMine: toActiveMine,
+            cookiesCursor: cookiesCursor, cookiesGrandma: cookiesGrandma, cookiesFarm: cookiesFarm, cookiesBakery: cookiesBakery, cookiesMine: cookiesMine
           })
         );
       }
