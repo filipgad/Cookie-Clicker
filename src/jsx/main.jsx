@@ -60,29 +60,36 @@ document.addEventListener('DOMContentLoaded', function() {
     }
   }
 
+  const gameState = {
+    numberOfCookies: 0, // stores the current number of cookies
+      producePerSec: 0, // stores the number of produced cookies per second
+      cookiesMade: 0, // stores the number of cookies produced
+      numberOfCursors: 0, // each numberOf... stores the number of producers we have bought
+      toActiveCursor: 5, // each toActive... stores the number of points we need to activate the producer
+      cookiesCursor: 0, // each cookies... stores the number of cookies produced by producer per second
+      numberOfGrandmas: 0,
+      toActiveGrandma: 50,
+      cookiesGrandma: 0,
+      numberOfFarms:0,
+      toActiveFarm: 100,
+      cookiesFarm: 0,
+      numberOfBakeries: 0,
+      toActiveBakery: 200,
+      cookiesBakery: 0,
+      numberOfMines: 0,
+      toActiveMine: 400,
+      cookiesMine: 0
+  }
+
   class Game extends React.Component {
     constructor(props) {
       super(props);
-      this.state = {
-        numberOfCookies: 0, // stores the current number of cookies
-        producePerSec: 0, // stores the number of produced cookies per second
-        cookiesMade: 0, // stores the number of cookies produced
-        numberOfCursors: 0, // each numberOf... stores the number of producers we have bought
-        toActiveCursor: 5, // each toActive... stores the number of points we need to activate the producer
-        cookiesCursor: 0, // each cookies... stores the number of cookies produced by producer per second
-        numberOfGrandmas: 0,
-        toActiveGrandma: 50,
-        cookiesGrandma: 0,
-        numberOfFarms:0,
-        toActiveFarm: 100,
-        cookiesFarm: 0,
-        numberOfBakeries: 0,
-        toActiveBakery: 200,
-        cookiesBakery: 0,
-        numberOfMines: 0,
-        toActiveMine: 400,
-        cookiesMine: 0
-      }
+      this.state = this.loadSession() == null ? gameState : this.loadSession();
+    }
+
+    componentDidUpdate() {
+      // after every update save new state value
+      this.saveSession(this.state);
     }
 
     componentDidMount() {
@@ -96,6 +103,16 @@ document.addEventListener('DOMContentLoaded', function() {
 
     componentWillUnmount() {
       clearInterval(this.intervalId);
+    }
+
+    // localStorage save
+    saveSession = (state) => {
+        localStorage.setItem('session', JSON.stringify(state));
+    }
+
+    // localStorage load
+    loadSession = () => {
+        return JSON.parse(localStorage.getItem('session'));
     }
 
     handleClick = () => {
