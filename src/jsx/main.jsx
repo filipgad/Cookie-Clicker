@@ -19,7 +19,15 @@ document.addEventListener('DOMContentLoaded', function() {
       let className = classList.join(' ');
 
       // text in button
-      const producerBtnContent = <p>{this.props.name}! You have: {this.props.numberOfElements} {this.props.name}s. Each {this.props.name} produces {this.props.producePerSec} cookies per second. For next you need: {this.props.toActiveBtn} cookies.</p>;
+      const producerBtnContent =  <div>
+                                    <img src={"../src/images/" + this.props.img} />
+                                    <h1>{this.props.name}</h1>
+                                    <ul>
+                                      <li>Each {this.props.name} produces {this.props.producePerSec} cookies per second.</li>
+                                      <li>For next you need: {this.props.toActiveBtn} cookies.</li>
+                                    </ul>
+                                    <span>{this.props.numberOfElements}</span>
+                                  </div>;
 
       return (
         this.props.numberOfCookies >= this.props.toActiveBtn
@@ -37,11 +45,11 @@ document.addEventListener('DOMContentLoaded', function() {
     render() {
       return (
         <div className="store">
-          <Producer name="Cursor" numberOfCookies={this.props.numberOfCookies} clickBtn={this.props.clickCursor} numberOfElements={this.props.numberOfCursors} toActiveBtn={this.props.toActiveCursor} producePerSec={this.props.cookiesCursor} />
-          <Producer name="Grandma" numberOfCookies={this.props.numberOfCookies} clickBtn={this.props.clickGrandma} numberOfElements={this.props.numberOfGrandmas} toActiveBtn={this.props.toActiveGrandma} producePerSec={this.props.cookiesGrandma} />
-          <Producer name="Farm" numberOfCookies={this.props.numberOfCookies} clickBtn={this.props.clickFarm} numberOfElements={this.props.numberOfFarms} toActiveBtn={this.props.toActiveFarm} producePerSec={this.props.cookiesFarm} />
-          <Producer name="Bakery" numberOfCookies={this.props.numberOfCookies} clickBtn={this.props.clickBakery} numberOfElements={this.props.numberOfBakeries} toActiveBtn={this.props.toActiveBakery} producePerSec={this.props.cookiesBakery} />
-          <Producer name="Mine" numberOfCookies={this.props.numberOfCookies} clickBtn={this.props.clickMine} numberOfElements={this.props.numberOfMines} toActiveBtn={this.props.toActiveMine} producePerSec={this.props.cookiesMine} />
+          <Producer name="Cursor" img="004-pay-per-click.png" numberOfCookies={this.props.numberOfCookies} clickBtn={this.props.clickCursor} numberOfElements={this.props.numberOfCursors} toActiveBtn={this.props.toActiveCursor} producePerSec={this.props.cookiesCursor} />
+          <Producer name="Grandma" img="005-old-woman.png" numberOfCookies={this.props.numberOfCookies} clickBtn={this.props.clickGrandma} numberOfElements={this.props.numberOfGrandmas} toActiveBtn={this.props.toActiveGrandma} producePerSec={this.props.cookiesGrandma} />
+          <Producer name="Farm" img="003-sprout.png" numberOfCookies={this.props.numberOfCookies} clickBtn={this.props.clickFarm} numberOfElements={this.props.numberOfFarms} toActiveBtn={this.props.toActiveFarm} producePerSec={this.props.cookiesFarm} />
+          <Producer name="Bakery" img="002-business.png" numberOfCookies={this.props.numberOfCookies} clickBtn={this.props.clickBakery} numberOfElements={this.props.numberOfBakeries} toActiveBtn={this.props.toActiveBakery} producePerSec={this.props.cookiesBakery} />
+          <Producer name="Mine" img="001-transport.png" numberOfCookies={this.props.numberOfCookies} clickBtn={this.props.clickMine} numberOfElements={this.props.numberOfMines} toActiveBtn={this.props.toActiveMine} producePerSec={this.props.cookiesMine} />
         </div>
       );
     }
@@ -54,7 +62,7 @@ document.addEventListener('DOMContentLoaded', function() {
         <div className="scoreBoard">
           <h1>Now you have: {this.props.numberOfCookies} cookies</h1>
           <p>You produce {this.props.producePerSec} cookies per second</p>
-          <h2>You have already made {this.props.cookiesMade} cookies</h2>
+          <h3>You have already made {this.props.cookiesMade} cookies</h3>
         </div>
       )
     }
@@ -62,23 +70,23 @@ document.addEventListener('DOMContentLoaded', function() {
 
   const gameState = {
     numberOfCookies: 0, // stores the current number of cookies
-      producePerSec: 0, // stores the number of produced cookies per second
-      cookiesMade: 0, // stores the number of cookies produced
-      numberOfCursors: 0, // each numberOf... stores the number of producers we have bought
-      toActiveCursor: 5, // each toActive... stores the number of points we need to activate the producer
-      cookiesCursor: 0, // each cookies... stores the number of cookies produced by producer per second
-      numberOfGrandmas: 0,
-      toActiveGrandma: 50,
-      cookiesGrandma: 0,
-      numberOfFarms:0,
-      toActiveFarm: 100,
-      cookiesFarm: 0,
-      numberOfBakeries: 0,
-      toActiveBakery: 200,
-      cookiesBakery: 0,
-      numberOfMines: 0,
-      toActiveMine: 400,
-      cookiesMine: 0
+    producePerSec: 0, // stores the number of produced cookies per second
+    cookiesMade: 0, // stores the number of cookies produced
+    numberOfCursors: 0, // each numberOf... stores the number of producers we have bought
+    toActiveCursor: 5, // each toActive... stores the number of points we need to activate the producer
+    cookiesCursor: 0, // each cookies... stores the number of cookies produced by producer per second
+    numberOfGrandmas: 0,
+    toActiveGrandma: 50,
+    cookiesGrandma: 0,
+    numberOfFarms:0,
+    toActiveFarm: 100,
+    cookiesFarm: 0,
+    numberOfBakeries: 0,
+    toActiveBakery: 200,
+    cookiesBakery: 0,
+    numberOfMines: 0,
+    toActiveMine: 400,
+    cookiesMine: 0
   }
 
   class Game extends React.Component {
@@ -107,12 +115,12 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // localStorage save
     saveSession = (state) => {
-        localStorage.setItem('session', JSON.stringify(state));
+        localStorage.setItem('cookieClickerData', JSON.stringify(state));
     }
 
     // localStorage load
     loadSession = () => {
-        return JSON.parse(localStorage.getItem('session'));
+        return JSON.parse(localStorage.getItem('cookieClickerData'));
     }
 
     handleClick = () => {
@@ -198,14 +206,16 @@ document.addEventListener('DOMContentLoaded', function() {
       return (
         <div className="game">
           <ScoreBoard numberOfCookies={numberOfCookies} producePerSec={producePerSec} cookiesMade={cookiesMade}  />
-          <Cookie onClick={this.handleClick} />
-          <Store
-            numberOfCookies={numberOfCookies}
-            clickCursor={this.clickCursor} clickGrandma={this.clickGrandma} clickFarm={this.clickFarm} clickBakery={this.clickBakery} clickMine={this.clickMine}
-            numberOfCursors={numberOfCursors} numberOfGrandmas={numberOfGrandmas} numberOfFarms={numberOfFarms} numberOfBakeries={numberOfBakeries} numberOfMines={numberOfMines}
-            toActiveCursor={toActiveCursor} toActiveGrandma={toActiveGrandma} toActiveFarm={toActiveFarm} toActiveBakery={toActiveBakery} toActiveMine={toActiveMine}
-            cookiesCursor={cookiesCursor} cookiesGrandma={cookiesGrandma} cookiesFarm={cookiesFarm} cookiesBakery={cookiesBakery} cookiesMine={cookiesMine}
-          />
+          <div className="game_nav">
+            <Cookie onClick={this.handleClick} />
+            <Store
+              numberOfCookies={numberOfCookies}
+              clickCursor={this.clickCursor} clickGrandma={this.clickGrandma} clickFarm={this.clickFarm} clickBakery={this.clickBakery} clickMine={this.clickMine}
+              numberOfCursors={numberOfCursors} numberOfGrandmas={numberOfGrandmas} numberOfFarms={numberOfFarms} numberOfBakeries={numberOfBakeries} numberOfMines={numberOfMines}
+              toActiveCursor={toActiveCursor} toActiveGrandma={toActiveGrandma} toActiveFarm={toActiveFarm} toActiveBakery={toActiveBakery} toActiveMine={toActiveMine}
+              cookiesCursor={cookiesCursor} cookiesGrandma={cookiesGrandma} cookiesFarm={cookiesFarm} cookiesBakery={cookiesBakery} cookiesMine={cookiesMine}
+            />
+          </div>
         </div>
       );
     }
