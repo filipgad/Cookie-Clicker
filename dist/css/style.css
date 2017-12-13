@@ -1,2 +1,69 @@
+@import url(https://fonts.googleapis.com/css?family=Roboto:400,700);* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box; }
+
 body {
-  background-color: #f7f7f7; }
+  background-color: #325185;
+  color: #fff;
+  font-family: 'Roboto', sans-serif;
+  font-size: 2vmin; }
+
+#app, .game {
+  display: flex;
+  justify-content: center;
+  align-items: center; }
+
+.game {
+  flex-direction: column;
+  width: 100vw;
+  height: 100vh;
+  max-width: 1000px; }
+
+.scoreBoard {
+  line-height: 230%;
+  height: 15%;
+  text-align: center; }
+  .scoreBoard h3 {
+    opacity: .4; }
+
+.game_nav {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  width: 100%;
+  height: 70%; }
+
+.cookie {
+  width: 50%;
+  border-radius: 50%;
+  background-color: #915E30;
+  border: none;
+  width: 300px;
+  height: 300px; }
+  .cookie:focus {
+    outline: none; }
+
+.store {
+  width: 50%;
+  height: 70%; }
+
+.storeBtn {
+  height: 17%;
+  width: 100%;
+  margin: 5px;
+  border-radius: 10px;
+  background-color: #F5F2EB;
+  border: 3px solid #B4CAB5; }
+  .storeBtn div {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 0 10px; }
+    .storeBtn div h1 {
+      text-transform: uppercase; }
+    .storeBtn div li {
+      list-style-type: none; }
+    .storeBtn div span {
+      font-size: 4vmin;
+      opacity: .6; }
