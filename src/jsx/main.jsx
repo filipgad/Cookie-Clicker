@@ -14,10 +14,6 @@ document.addEventListener('DOMContentLoaded', function() {
   class Producer extends React.Component {
     render() {
 
-      // to add class with producer name
-      let classList = [this.props.name.toLowerCase(), 'storeBtn'];
-      let className = classList.join(' ');
-
       // text in button
       const producerBtnContent =  <div>
                                     <img src={"../dist/imagessrc/images/" + this.props.img} />
@@ -32,9 +28,9 @@ document.addEventListener('DOMContentLoaded', function() {
       return (
         this.props.numberOfCookies >= this.props.toActiveBtn
         ?
-          <button className={className} onClick={this.props.clickBtn}>{producerBtnContent}</button>
+          <button className={`${this.props.name.toLowerCase()} storeBtn`} onClick={this.props.clickBtn}>{producerBtnContent}</button>
         :
-          <button className={className} disabled onClick={this.props.clickBtn}>{producerBtnContent}</button>
+          <button className={`${this.props.name.toLowerCase()} storeBtn`} disabled onClick={this.props.clickBtn}>{producerBtnContent}</button>
       );
     }
   }
