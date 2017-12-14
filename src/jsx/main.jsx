@@ -6,7 +6,7 @@ document.addEventListener('DOMContentLoaded', function() {
   // Cookie to click
   class Cookie extends React.Component {
     render() {
-      return <button className="cookie" onClick={this.props.onClick}>Cookie</button>;
+      return <button className="cookie" onClick={this.props.onClick}></button>;
     }
   }
 
@@ -20,7 +20,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
       // text in button
       const producerBtnContent =  <div>
-                                    <img src={"../src/images/" + this.props.img} />
+                                    <img src={"../dist/imagessrc/images/" + this.props.img} />
                                     <h1>{this.props.name}</h1>
                                     <ul>
                                       <li>Each {this.props.name} produces {this.props.producePerSec} cookies per second.</li>
@@ -123,6 +123,7 @@ document.addEventListener('DOMContentLoaded', function() {
         return JSON.parse(localStorage.getItem('cookieClickerData'));
     }
 
+    // COOKIE BUTTON
     handleClick = () => {
       this.setState({
         cookiesMade: this.state.cookiesMade + 1,
@@ -130,6 +131,12 @@ document.addEventListener('DOMContentLoaded', function() {
       });
     }
 
+    // NEW GAME BUTTON
+    clickNewGame = () => {
+      this.state = gameState;
+    }
+
+    // CURSOR BUTTON
     clickCursor = () => {
       this.setState({
         numberOfCursors: this.state.numberOfCursors + 1,
@@ -140,6 +147,7 @@ document.addEventListener('DOMContentLoaded', function() {
       });
     }
 
+    // GRANDMA BUTTON
     clickGrandma = () => {
       this.setState({
         numberOfGrandmas: this.state.numberOfGrandmas + 1,
@@ -150,6 +158,7 @@ document.addEventListener('DOMContentLoaded', function() {
       });
     }
 
+    // FARM BUTTON
     clickFarm = () => {
       this.setState({
         numberOfFarms: this.state.numberOfFarms + 1,
@@ -160,6 +169,7 @@ document.addEventListener('DOMContentLoaded', function() {
       });
     }
 
+    // BAKERY BUTTON
     clickBakery = () => {
       this.setState({
         numberOfBakeries: this.state.numberOfBakeries + 1,
@@ -170,6 +180,7 @@ document.addEventListener('DOMContentLoaded', function() {
       });
     }
 
+    // MINE BUTTON
     clickMine = () => {
       this.setState({
         numberOfMines: this.state.numberOfMines + 1,
@@ -216,6 +227,7 @@ document.addEventListener('DOMContentLoaded', function() {
               cookiesCursor={cookiesCursor} cookiesGrandma={cookiesGrandma} cookiesFarm={cookiesFarm} cookiesBakery={cookiesBakery} cookiesMine={cookiesMine}
             />
           </div>
+          <button className="newGame" onClick={this.clickNewGame}>NEW GAME</button>
         </div>
       );
     }
