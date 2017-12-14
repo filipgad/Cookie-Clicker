@@ -9631,11 +9631,7 @@ document.addEventListener('DOMContentLoaded', function () {
     _createClass(Cookie, [{
       key: 'render',
       value: function render() {
-        return _react2.default.createElement(
-          'button',
-          { className: 'cookie', onClick: this.props.onClick },
-          'Cookie'
-        );
+        return _react2.default.createElement('button', { className: 'cookie', onClick: this.props.onClick });
       }
     }]);
 
@@ -9666,7 +9662,7 @@ document.addEventListener('DOMContentLoaded', function () {
         var producerBtnContent = _react2.default.createElement(
           'div',
           null,
-          _react2.default.createElement('img', { src: "../src/images/" + this.props.img }),
+          _react2.default.createElement('img', { src: "../dist/imagessrc/images/" + this.props.img }),
           _react2.default.createElement(
             'h1',
             null,
@@ -9834,6 +9830,10 @@ document.addEventListener('DOMContentLoaded', function () {
         });
       };
 
+      _this5.clickNewGame = function () {
+        _this5.state = gameState;
+      };
+
       _this5.clickCursor = function () {
         _this5.setState({
           numberOfCursors: _this5.state.numberOfCursors + 1,
@@ -9917,6 +9917,27 @@ document.addEventListener('DOMContentLoaded', function () {
 
       // localStorage load
 
+
+      // COOKIE BUTTON
+
+
+      // NEW GAME BUTTON
+
+
+      // CURSOR BUTTON
+
+
+      // GRANDMA BUTTON
+
+
+      // FARM BUTTON
+
+
+      // BAKERY BUTTON
+
+
+      // MINE BUTTON
+
     }, {
       key: 'render',
       value: function render() {
@@ -9956,6 +9977,11 @@ document.addEventListener('DOMContentLoaded', function () {
               toActiveCursor: toActiveCursor, toActiveGrandma: toActiveGrandma, toActiveFarm: toActiveFarm, toActiveBakery: toActiveBakery, toActiveMine: toActiveMine,
               cookiesCursor: cookiesCursor, cookiesGrandma: cookiesGrandma, cookiesFarm: cookiesFarm, cookiesBakery: cookiesBakery, cookiesMine: cookiesMine
             })
+          ),
+          _react2.default.createElement(
+            'button',
+            { className: 'newGame', onClick: this.clickNewGame },
+            'NEW GAME'
           )
         );
       }
