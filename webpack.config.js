@@ -23,7 +23,7 @@ module.exports = {
                 exclude: /node_modules/,
                 use: ExtractTextPlugin.extract({
                     fallback: 'style-loader',
-                    use: ['css-loader', 'sass-loader']
+                    use: ['css-loader?url=false', 'sass-loader']
                 })
 
             },
@@ -33,7 +33,9 @@ module.exports = {
                 use: [
                     {
                         loader: 'file-loader',
-                        options: {}
+                        options: {
+                            name: '[path][name].[ext]',
+                            outputPath: './dist/imagessrc/images'}
                     }
                 ]
             }

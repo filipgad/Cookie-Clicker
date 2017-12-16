@@ -98,9 +98,11 @@ document.addEventListener('DOMContentLoaded', function() {
 
     componentDidMount() {
       this.intervalId = setInterval( () => {
-        this.setState({
-          numberOfCookies: this.state.numberOfCookies + (this.state.cookiesCursor + this.state.cookiesGrandma + this.state.cookiesFarm + this.state.cookiesBakery + this.state.cookiesMine),
-          cookiesMade: this.state.cookiesMade + (this.state.cookiesCursor + this.state.cookiesGrandma + this.state.cookiesFarm + this.state.cookiesBakery + this.state.cookiesMine)
+        this.setState((prevState) => {
+          return {
+            numberOfCookies: prevState.numberOfCookies + (this.state.cookiesCursor + this.state.cookiesGrandma + this.state.cookiesFarm + this.state.cookiesBakery + this.state.cookiesMine),
+            cookiesMade: prevState.cookiesMade + (this.state.cookiesCursor + this.state.cookiesGrandma + this.state.cookiesFarm + this.state.cookiesBakery + this.state.cookiesMine)
+          }
         });
       }, 1000);
     }
@@ -121,9 +123,11 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // COOKIE BUTTON
     handleClick = () => {
-      this.setState({
-        cookiesMade: this.state.cookiesMade + 1,
-        numberOfCookies: this.state.numberOfCookies + 1
+      this.setState((prevState) => {
+        return {
+          cookiesMade: prevState.cookiesMade + 1,
+          numberOfCookies: prevState.numberOfCookies + 1
+        }
       });
     }
 
@@ -134,56 +138,66 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // CURSOR BUTTON
     clickCursor = () => {
-      this.setState({
-        numberOfCursors: this.state.numberOfCursors + 1,
-        toActiveCursor: this.state.toActiveCursor * 2,
-        numberOfCookies: this.state.numberOfCookies - this.state.toActiveCursor,
-        cookiesCursor: this.state.cookiesCursor + 1,
-        producePerSec: this.state.producePerSec + 1
+      this.setState((prevState) => {
+        return {
+          numberOfCursors: prevState.numberOfCursors + 1,
+          toActiveCursor: prevState.toActiveCursor * 2,
+          numberOfCookies: prevState.numberOfCookies - this.state.toActiveCursor,
+          cookiesCursor: prevState.cookiesCursor + 1,
+          producePerSec: prevState.producePerSec + 1
+        }
       });
     }
 
     // GRANDMA BUTTON
     clickGrandma = () => {
-      this.setState({
-        numberOfGrandmas: this.state.numberOfGrandmas + 1,
-        toActiveGrandma: this.state.toActiveGrandma * 2,
-        numberOfCookies: this.state.numberOfCookies - this.state.toActiveGrandma,
-        cookiesGrandma: this.state.cookiesGrandma + 2,
-        producePerSec: this.state.producePerSec + 2
+      this.setState((prevState) => {
+        return {
+          numberOfGrandmas: prevState.numberOfGrandmas + 1,
+          toActiveGrandma: prevState.toActiveGrandma * 2,
+          numberOfCookies: prevState.numberOfCookies - this.state.toActiveGrandma,
+          cookiesGrandma: prevState.cookiesGrandma + 2,
+          producePerSec: prevState.producePerSec + 2
+        }
       });
     }
 
     // FARM BUTTON
     clickFarm = () => {
-      this.setState({
-        numberOfFarms: this.state.numberOfFarms + 1,
-        toActiveFarm: this.state.toActiveFarm * 2,
-        numberOfCookies: this.state.numberOfCookies - this.state.toActiveFarm,
-        cookiesFarm: this.state.cookiesFarm + 4,
-        producePerSec: this.state.producePerSec + 4
+      this.setState((prevState) => {
+        return {
+          numberOfFarms: prevState.numberOfFarms + 1,
+          toActiveFarm: prevState.toActiveFarm * 2,
+          numberOfCookies: prevState.numberOfCookies - this.state.toActiveFarm,
+          cookiesFarm: prevState.cookiesFarm + 4,
+          producePerSec: prevState.producePerSec + 4
+        }
       });
     }
 
     // BAKERY BUTTON
     clickBakery = () => {
-      this.setState({
-        numberOfBakeries: this.state.numberOfBakeries + 1,
-        toActiveBakery: this.state.toActiveBakery * 2,
-        numberOfCookies: this.state.numberOfCookies - this.state.toActiveBakery,
-        cookiesBakery: this.state.cookiesBakery + 8,
-        producePerSec: this.state.producePerSec + 8
+      this.setState((prevState) => {
+        return {
+          numberOfBakeries: prevState.numberOfBakeries + 1,
+          toActiveBakery: prevState.toActiveBakery * 2,
+          numberOfCookies: prevState.numberOfCookies - this.state.toActiveBakery,
+          cookiesBakery: prevState.cookiesBakery + 8,
+          producePerSec: prevState.producePerSec + 8
+        }
       });
     }
 
     // MINE BUTTON
     clickMine = () => {
-      this.setState({
-        numberOfMines: this.state.numberOfMines + 1,
-        toActiveMine: this.state.toActiveMine * 2,
-        numberOfCookies: this.state.numberOfCookies - this.state.toActiveMine,
-        cookiesMine: this.state.cookiesMine + 16,
-        producePerSec: this.state.producePerSec + 16
+      this.setState((prevState) => {
+        return {
+          numberOfMines: prevState.numberOfMines + 1,
+          toActiveMine: prevState.toActiveMine * 2,
+          numberOfCookies: prevState.numberOfCookies - this.state.toActiveMine,
+          cookiesMine: prevState.cookiesMine + 16,
+          producePerSec: prevState.producePerSec + 16
+        }
       });
     }
 
@@ -236,6 +250,53 @@ document.addEventListener('DOMContentLoaded', function() {
       );
     }
   }
+
+  // var indexedDB = window.indexedDB || window.mozIndexedDB || window.webkitIndexedDB || window.msIndexedDB || window.shimIndexedDB;
+  //
+  // // Open (or create) the database
+  // var open = indexedDB.open("CookieClickerDB", 1);
+  //
+  // saveGame = () => {
+  //   open.onerror=function(e) {
+  //     console.log('Error')
+  //   };
+  //   open.onsuccess = function(e) {
+  //     db=e.target.result;
+  //   };
+  //   open.onupgradeneeded = function(e){
+  //     console.log(db);
+  //     db=e.target.result;
+  //     var trans=e.target.transaction;
+  //     var os = db.createObjectStore('SaveGameState', {keyPath: 1});
+  //     var objectstore=  trans.objectStore('SaveGameState');
+  //     var addreq = objectstore.add(state);
+  //         addreq.onsuccess = function(e)  {console.log('Success!');console.dir(e)}
+  //   }
+  // };
+  // // Create the schema
+  // open.onupgradeneeded = function() {
+  //     var db = open.result;
+  //     var store = db.createObjectStore("SaveGameState", {keyPath: 1});
+  // };
+  //
+  // open.onsuccess = function() {
+  //   console.log("baza otwarta");
+  //     // Start a new transaction
+  //     var db = open.result;
+  //     var tx = db.transaction("SaveGameState", "readwrite");
+  //     var store = tx.objectStore("SaveGameState");
+  //
+  //     // Add some data
+  //     store.put({state});
+  //
+  //     var saveGame = store.get(1);
+  //     console.log(saveGame);
+  //
+  //     // Close the db when the transaction is done
+  //     tx.oncomplete = function() {
+  //         db.close();
+  //     };
+  // }
 
     ReactDOM.render(
       <App />,

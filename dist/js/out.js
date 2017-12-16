@@ -9654,10 +9654,6 @@ document.addEventListener('DOMContentLoaded', function () {
       key: 'render',
       value: function render() {
 
-        // to add class with producer name
-        var classList = [this.props.name.toLowerCase(), 'storeBtn'];
-        var className = classList.join(' ');
-
         // text in button
         var producerBtnContent = _react2.default.createElement(
           'div',
@@ -9697,11 +9693,11 @@ document.addEventListener('DOMContentLoaded', function () {
 
         return this.props.numberOfCookies >= this.props.toActiveBtn ? _react2.default.createElement(
           'button',
-          { className: className, onClick: this.props.clickBtn },
+          { className: this.props.name.toLowerCase() + ' storeBtn', onClick: this.props.clickBtn },
           producerBtnContent
         ) : _react2.default.createElement(
           'button',
-          { className: className, disabled: true, onClick: this.props.clickBtn },
+          { className: this.props.name.toLowerCase() + ' storeBtn', disabled: true, onClick: this.props.clickBtn },
           producerBtnContent
         );
       }

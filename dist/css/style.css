@@ -40,7 +40,12 @@ body {
   border: none;
   background: url(../imagessrc/images/006-cookies.png) center center/contain no-repeat;
   width: 40vmin;
-  height: 40vmin; }
+  height: 40vmin;
+  cursor: pointer; }
+  .cookie:hover {
+    transform: scale(1.1); }
+  .cookie:active {
+    transform: scale(1); }
   .cookie:focus {
     outline: none; }
 
@@ -78,6 +83,9 @@ body {
   border: 3px solid #fff;
   color: #fff;
   font-size: 1.5rem;
-  padding: 5px 10px; }
+  padding: 10px 15px; }
+  .newGame:hover {
+    color: #B4CAB5;
+    border: 3px solid #B4CAB5; }
   .newGame:focus {
     outline: none; }
