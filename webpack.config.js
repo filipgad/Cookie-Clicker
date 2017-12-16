@@ -32,10 +32,7 @@ module.exports = {
                 exclude: /node_modules/,
                 use: [
                     {
-                        loader: 'file-loader',
-                        options: {
-                            name: '[path][name].[ext]',
-                            outputPath: './dist/imagessrc/images'}
+                        loader: 'url-loader'
                     }
                 ]
             }
