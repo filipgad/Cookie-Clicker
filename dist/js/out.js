@@ -9658,7 +9658,7 @@ document.addEventListener('DOMContentLoaded', function () {
         var producerBtnContent = _react2.default.createElement(
           'div',
           null,
-          _react2.default.createElement('img', { src: "../dist/imagessrc/images/" + this.props.img }),
+          _react2.default.createElement('img', { src: "./dist/imagessrc/images/" + this.props.img }),
           _react2.default.createElement(
             'h1',
             null,
@@ -9820,9 +9820,11 @@ document.addEventListener('DOMContentLoaded', function () {
       };
 
       _this5.handleClick = function () {
-        _this5.setState({
-          cookiesMade: _this5.state.cookiesMade + 1,
-          numberOfCookies: _this5.state.numberOfCookies + 1
+        _this5.setState(function (prevState) {
+          return {
+            cookiesMade: prevState.cookiesMade + 1,
+            numberOfCookies: prevState.numberOfCookies + 1
+          };
         });
       };
 
@@ -9831,52 +9833,62 @@ document.addEventListener('DOMContentLoaded', function () {
       };
 
       _this5.clickCursor = function () {
-        _this5.setState({
-          numberOfCursors: _this5.state.numberOfCursors + 1,
-          toActiveCursor: _this5.state.toActiveCursor * 2,
-          numberOfCookies: _this5.state.numberOfCookies - _this5.state.toActiveCursor,
-          cookiesCursor: _this5.state.cookiesCursor + 1,
-          producePerSec: _this5.state.producePerSec + 1
+        _this5.setState(function (prevState) {
+          return {
+            numberOfCursors: prevState.numberOfCursors + 1,
+            toActiveCursor: prevState.toActiveCursor * 2,
+            numberOfCookies: prevState.numberOfCookies - _this5.state.toActiveCursor,
+            cookiesCursor: prevState.cookiesCursor + 1,
+            producePerSec: prevState.producePerSec + 1
+          };
         });
       };
 
       _this5.clickGrandma = function () {
-        _this5.setState({
-          numberOfGrandmas: _this5.state.numberOfGrandmas + 1,
-          toActiveGrandma: _this5.state.toActiveGrandma * 2,
-          numberOfCookies: _this5.state.numberOfCookies - _this5.state.toActiveGrandma,
-          cookiesGrandma: _this5.state.cookiesGrandma + 2,
-          producePerSec: _this5.state.producePerSec + 2
+        _this5.setState(function (prevState) {
+          return {
+            numberOfGrandmas: prevState.numberOfGrandmas + 1,
+            toActiveGrandma: prevState.toActiveGrandma * 2,
+            numberOfCookies: prevState.numberOfCookies - _this5.state.toActiveGrandma,
+            cookiesGrandma: prevState.cookiesGrandma + 2,
+            producePerSec: prevState.producePerSec + 2
+          };
         });
       };
 
       _this5.clickFarm = function () {
-        _this5.setState({
-          numberOfFarms: _this5.state.numberOfFarms + 1,
-          toActiveFarm: _this5.state.toActiveFarm * 2,
-          numberOfCookies: _this5.state.numberOfCookies - _this5.state.toActiveFarm,
-          cookiesFarm: _this5.state.cookiesFarm + 4,
-          producePerSec: _this5.state.producePerSec + 4
+        _this5.setState(function (prevState) {
+          return {
+            numberOfFarms: prevState.numberOfFarms + 1,
+            toActiveFarm: prevState.toActiveFarm * 2,
+            numberOfCookies: prevState.numberOfCookies - _this5.state.toActiveFarm,
+            cookiesFarm: prevState.cookiesFarm + 4,
+            producePerSec: prevState.producePerSec + 4
+          };
         });
       };
 
       _this5.clickBakery = function () {
-        _this5.setState({
-          numberOfBakeries: _this5.state.numberOfBakeries + 1,
-          toActiveBakery: _this5.state.toActiveBakery * 2,
-          numberOfCookies: _this5.state.numberOfCookies - _this5.state.toActiveBakery,
-          cookiesBakery: _this5.state.cookiesBakery + 8,
-          producePerSec: _this5.state.producePerSec + 8
+        _this5.setState(function (prevState) {
+          return {
+            numberOfBakeries: prevState.numberOfBakeries + 1,
+            toActiveBakery: prevState.toActiveBakery * 2,
+            numberOfCookies: prevState.numberOfCookies - _this5.state.toActiveBakery,
+            cookiesBakery: prevState.cookiesBakery + 8,
+            producePerSec: prevState.producePerSec + 8
+          };
         });
       };
 
       _this5.clickMine = function () {
-        _this5.setState({
-          numberOfMines: _this5.state.numberOfMines + 1,
-          toActiveMine: _this5.state.toActiveMine * 2,
-          numberOfCookies: _this5.state.numberOfCookies - _this5.state.toActiveMine,
-          cookiesMine: _this5.state.cookiesMine + 16,
-          producePerSec: _this5.state.producePerSec + 16
+        _this5.setState(function (prevState) {
+          return {
+            numberOfMines: prevState.numberOfMines + 1,
+            toActiveMine: prevState.toActiveMine * 2,
+            numberOfCookies: prevState.numberOfCookies - _this5.state.toActiveMine,
+            cookiesMine: prevState.cookiesMine + 16,
+            producePerSec: prevState.producePerSec + 16
+          };
         });
       };
 
@@ -9896,9 +9908,11 @@ document.addEventListener('DOMContentLoaded', function () {
         var _this6 = this;
 
         this.intervalId = setInterval(function () {
-          _this6.setState({
-            numberOfCookies: _this6.state.numberOfCookies + (_this6.state.cookiesCursor + _this6.state.cookiesGrandma + _this6.state.cookiesFarm + _this6.state.cookiesBakery + _this6.state.cookiesMine),
-            cookiesMade: _this6.state.cookiesMade + (_this6.state.cookiesCursor + _this6.state.cookiesGrandma + _this6.state.cookiesFarm + _this6.state.cookiesBakery + _this6.state.cookiesMine)
+          _this6.setState(function (prevState) {
+            return {
+              numberOfCookies: prevState.numberOfCookies + (_this6.state.cookiesCursor + _this6.state.cookiesGrandma + _this6.state.cookiesFarm + _this6.state.cookiesBakery + _this6.state.cookiesMine),
+              cookiesMade: prevState.cookiesMade + (_this6.state.cookiesCursor + _this6.state.cookiesGrandma + _this6.state.cookiesFarm + _this6.state.cookiesBakery + _this6.state.cookiesMine)
+            };
           });
         }, 1000);
       }
@@ -10004,6 +10018,53 @@ document.addEventListener('DOMContentLoaded', function () {
 
     return App;
   }(_react2.default.Component);
+
+  var indexedDB = window.indexedDB || window.mozIndexedDB || window.webkitIndexedDB || window.msIndexedDB || window.shimIndexedDB;
+
+  // Open (or create) the database
+  var open = indexedDB.open("CookieClickerDB", 1);
+
+  // saveGame = () => {
+  //   open.onerror=function(e) {
+  //     console.log('Error')
+  //   };
+  //   open.onsuccess = function(e) {
+  //     db=e.target.result;
+  //   };
+  //   open.onupgradeneeded = function(e){
+  //     console.log(db);
+  //     db=e.target.result;
+  //     var trans=e.target.transaction;
+  //     var os = db.createObjectStore('SaveGameState', {keyPath: 1});
+  //     var objectstore=  trans.objectStore('SaveGameState');
+  //     var addreq = objectstore.add(state);
+  //         addreq.onsuccess = function(e)  {console.log('Success!');console.dir(e)}
+  //   }
+  // };
+  // // Create the schema
+  // open.onupgradeneeded = function() {
+  //     var db = open.result;
+  //     var store = db.createObjectStore("SaveGameState", {keyPath: 1});
+  // };
+  //
+  // open.onsuccess = function() {
+  //   console.log("baza otwarta");
+  //     // Start a new transaction
+  //     var db = open.result;
+  //     var tx = db.transaction("SaveGameState", "readwrite");
+  //     var store = tx.objectStore("SaveGameState");
+  //
+  //     // Add some data
+  //     store.put({state});
+  //
+  //     var saveGame = store.get(1);
+  //     console.log(saveGame);
+  //
+  //     // Close the db when the transaction is done
+  //     tx.oncomplete = function() {
+  //         db.close();
+  //     };
+  // }
 
   _reactDom2.default.render(_react2.default.createElement(App, null), document.getElementById('app'));
 });
