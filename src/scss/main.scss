@@ -55,7 +55,7 @@ body {
 .cookie {
   border-radius: 50%;
   border: none;
-  background: url(../imagessrc/images/006-cookies.png) center center/contain no-repeat; 
+  background: url(../imagessrc/images/006-cookies.png) center center/contain no-repeat;
   width: 40vmin;
   height: 40vmin;
   cursor: pointer;
@@ -119,5 +119,33 @@ body {
   }
   &:focus {
     outline: none;
+  }
+}
+
+.cookieInfo {
+  left: 0;
+  top: 0;
+  position: fixed;
+  width: 100vw;
+  z-index: 1000;
+  text-align: center;
+  padding: 30px 0;
+  background-color: rgba(0,0,0,.7);
+  font-size: 1.5rem;
+  .agreeBtn {
+    margin-top: 10px;
+    background-color: inherit;
+    border: 3px solid #fff;
+    color: #fff;
+    font-size: 1.2rem;
+    padding: 5px 10px;
+    &:hover {
+      color: #325185;
+      border: 3px solid #325185;
+      background-color: #fff;
+    }
+    &:focus {
+      outline: none;
+    }
   }
 }
