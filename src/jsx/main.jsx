@@ -16,7 +16,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
       // text in button
       const producerBtnContent =  <div>
-                                    <img src={"../dist/imagessrc/images/" + this.props.img} />
+                                    <img src={"./dist/imagessrc/images/" + this.props.img} />
                                     <h1>{this.props.name}</h1>
                                     <ul>
                                       <li>Each {this.props.name} produces {this.props.producePerSec} cookies per second.</li>
@@ -250,53 +250,6 @@ document.addEventListener('DOMContentLoaded', function() {
       );
     }
   }
-
-  // var indexedDB = window.indexedDB || window.mozIndexedDB || window.webkitIndexedDB || window.msIndexedDB || window.shimIndexedDB;
-  //
-  // // Open (or create) the database
-  // var open = indexedDB.open("CookieClickerDB", 1);
-  //
-  // saveGame = () => {
-  //   open.onerror=function(e) {
-  //     console.log('Error')
-  //   };
-  //   open.onsuccess = function(e) {
-  //     db=e.target.result;
-  //   };
-  //   open.onupgradeneeded = function(e){
-  //     console.log(db);
-  //     db=e.target.result;
-  //     var trans=e.target.transaction;
-  //     var os = db.createObjectStore('SaveGameState', {keyPath: 1});
-  //     var objectstore=  trans.objectStore('SaveGameState');
-  //     var addreq = objectstore.add(state);
-  //         addreq.onsuccess = function(e)  {console.log('Success!');console.dir(e)}
-  //   }
-  // };
-  // // Create the schema
-  // open.onupgradeneeded = function() {
-  //     var db = open.result;
-  //     var store = db.createObjectStore("SaveGameState", {keyPath: 1});
-  // };
-  //
-  // open.onsuccess = function() {
-  //   console.log("baza otwarta");
-  //     // Start a new transaction
-  //     var db = open.result;
-  //     var tx = db.transaction("SaveGameState", "readwrite");
-  //     var store = tx.objectStore("SaveGameState");
-  //
-  //     // Add some data
-  //     store.put({state});
-  //
-  //     var saveGame = store.get(1);
-  //     console.log(saveGame);
-  //
-  //     // Close the db when the transaction is done
-  //     tx.oncomplete = function() {
-  //         db.close();
-  //     };
-  // }
 
     ReactDOM.render(
       <App />,
