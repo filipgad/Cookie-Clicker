@@ -1,13 +1,17 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import Game from './components/Game.jsx';
+import CookieInfo from './components/CookieInfo.jsx';
 
 document.addEventListener('DOMContentLoaded', function() {
 
   class App extends React.Component {
     render() {
       return (
-        <Game />
+        <div>
+          <CookieInfo />
+          <Game />
+        </div>
       );
     }
   }
