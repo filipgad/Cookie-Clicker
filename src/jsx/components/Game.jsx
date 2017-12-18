@@ -28,12 +28,12 @@ const gameState = {
 class Game extends React.Component {
   constructor(props) {
     super(props);
-    this.state = this.loadSession() == null ? gameState : this.loadSession();
+    this.state = this.loadGame() == null ? gameState : this.loadGame();
   }
 
   componentDidUpdate() {
     // after every update save new state value
-    this.saveSession(this.state);
+    this.saveGame(this.state);
   }
 
   componentDidMount() {
@@ -52,12 +52,12 @@ class Game extends React.Component {
   }
 
   // localStorage save
-  saveSession = (state) => {
+  saveGame = (state) => {
       localStorage.setItem('cookieClickerData', JSON.stringify(state));
   }
 
   // localStorage load
-  loadSession = () => {
+  loadGame = () => {
       return JSON.parse(localStorage.getItem('cookieClickerData'));
   }
 

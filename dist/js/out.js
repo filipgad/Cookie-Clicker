@@ -22191,11 +22191,11 @@ var Game = function (_React$Component) {
 
     var _this = _possibleConstructorReturn(this, (Game.__proto__ || Object.getPrototypeOf(Game)).call(this, props));
 
-    _this.saveSession = function (state) {
+    _this.saveGame = function (state) {
       localStorage.setItem('cookieClickerData', JSON.stringify(state));
     };
 
-    _this.loadSession = function () {
+    _this.loadGame = function () {
       return JSON.parse(localStorage.getItem('cookieClickerData'));
     };
 
@@ -22272,7 +22272,7 @@ var Game = function (_React$Component) {
       });
     };
 
-    _this.state = _this.loadSession() == null ? gameState : _this.loadSession();
+    _this.state = _this.loadGame() == null ? gameState : _this.loadGame();
     return _this;
   }
 
@@ -22280,7 +22280,7 @@ var Game = function (_React$Component) {
     key: 'componentDidUpdate',
     value: function componentDidUpdate() {
       // after every update save new state value
-      this.saveSession(this.state);
+      this.saveGame(this.state);
     }
   }, {
     key: 'componentDidMount',
