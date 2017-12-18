@@ -22543,11 +22543,9 @@ var Producer = function (_React$Component) {
           _react2.default.createElement(
             "li",
             null,
-            "Each ",
-            this.props.name,
-            " produces ",
+            "Production: ",
             this.props.producePerSec,
-            " cookies per second."
+            " cookies/sec."
           ),
           _react2.default.createElement(
             "li",
