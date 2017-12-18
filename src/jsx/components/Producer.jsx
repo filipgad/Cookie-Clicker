@@ -9,7 +9,7 @@ class Producer extends React.Component {
                                   <img src={"./dist/imagessrc/images/" + this.props.img} />
                                   <h1>{this.props.name}</h1>
                                   <ul>
-                                    <li>Each {this.props.name} produces {this.props.producePerSec} cookies per second.</li>
+                                    <li>Production: {this.props.producePerSec} cookies/sec.</li>
                                     <li>For next you need: {this.props.toActiveBtn} cookies.</li>
                                   </ul>
                                   <span>{this.props.numberOfElements}</span>
