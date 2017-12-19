@@ -22156,31 +22156,34 @@ var _ScoreBoard2 = _interopRequireDefault(_ScoreBoard);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var gameState = {
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var Manufacturer = function Manufacturer(name, quantity, productionPerSec, cost, multiply) {
+  _classCallCheck(this, Manufacturer);
+
+  this.name = name;
+  this.quantity = quantity;
+  this.productionPerSec = productionPerSec;
+  this.cost = cost;
+  this.multiply = multiply;
+};
+
+var cursor = new Manufacturer("Cursor", 0, 1, 5, 1.15);
+var grandma = new Manufacturer("Grandma", 0, 2, 50, 1.25);
+var farm = new Manufacturer("Farm", 0, 8, 1100, 1.5);
+var bakery = new Manufacturer("Bakery", 0, 47, 12000, 1.75);
+var mine = new Manufacturer("Mine", 0, 260, 130000, 2);
+
+var producers = [cursor, grandma, farm, bakery, mine];
+
+var gameScore = {
   numberOfCookies: 0, // stores the current number of cookies
   producePerSec: 0, // stores the number of produced cookies per second
-  cookiesMade: 0, // stores the number of cookies produced
-  numberOfCursors: 0, // each numberOf... stores the number of producers we have bought
-  toActiveCursor: 5, // each toActive... stores the number of points we need to activate the producer
-  cookiesCursor: 0, // each cookies... stores the number of cookies produced by producer per second
-  numberOfGrandmas: 0,
-  toActiveGrandma: 50,
-  cookiesGrandma: 0,
-  numberOfFarms: 0,
-  toActiveFarm: 1100,
-  cookiesFarm: 0,
-  numberOfBakeries: 0,
-  toActiveBakery: 12000,
-  cookiesBakery: 0,
-  numberOfMines: 0,
-  toActiveMine: 130000,
-  cookiesMine: 0
+  cookiesMade: 0 // stores the number of cookies produced
 };
 
 var Game = function (_React$Component) {
@@ -22199,7 +22202,7 @@ var Game = function (_React$Component) {
       return JSON.parse(localStorage.getItem('cookieClickerData'));
     };
 
-    _this.handleClick = function () {
+    _this.clickCookie = function () {
       _this.setState(function (prevState) {
         return {
           cookiesMade: prevState.cookiesMade + 1,
@@ -22208,71 +22211,20 @@ var Game = function (_React$Component) {
       });
     };
 
+    _this.clickProducer = function (cost, production) {
+      _this.setState(function (prevState) {
+        return {
+          numberOfCookies: prevState.numberOfCookies - cost,
+          producePerSec: prevState.producePerSec + production
+        };
+      });
+    };
+
     _this.clickNewGame = function () {
-      _this.state = gameState;
+      _this.state = gameScore;
     };
 
-    _this.clickCursor = function () {
-      _this.setState(function (prevState) {
-        return {
-          numberOfCursors: prevState.numberOfCursors + 1,
-          toActiveCursor: Math.ceil(prevState.toActiveCursor * 1.15),
-          numberOfCookies: prevState.numberOfCookies - _this.state.toActiveCursor,
-          cookiesCursor: prevState.cookiesCursor + 1,
-          producePerSec: prevState.producePerSec + 1
-        };
-      });
-    };
-
-    _this.clickGrandma = function () {
-      _this.setState(function (prevState) {
-        return {
-          numberOfGrandmas: prevState.numberOfGrandmas + 1,
-          toActiveGrandma: Math.ceil(prevState.toActiveGrandma * 1.25),
-          numberOfCookies: prevState.numberOfCookies - _this.state.toActiveGrandma,
-          cookiesGrandma: prevState.cookiesGrandma + 2,
-          producePerSec: prevState.producePerSec + 2
-        };
-      });
-    };
-
-    _this.clickFarm = function () {
-      _this.setState(function (prevState) {
-        return {
-          numberOfFarms: prevState.numberOfFarms + 1,
-          toActiveFarm: Math.ceil(prevState.toActiveFarm * 1.5),
-          numberOfCookies: prevState.numberOfCookies - _this.state.toActiveFarm,
-          cookiesFarm: prevState.cookiesFarm + 8,
-          producePerSec: prevState.producePerSec + 8
-        };
-      });
-    };
-
-    _this.clickBakery = function () {
-      _this.setState(function (prevState) {
-        return {
-          numberOfBakeries: prevState.numberOfBakeries + 1,
-          toActiveBakery: Math.ceil(prevState.toActiveBakery * 1.75),
-          numberOfCookies: prevState.numberOfCookies - _this.state.toActiveBakery,
-          cookiesBakery: prevState.cookiesBakery + 47,
-          producePerSec: prevState.producePerSec + 47
-        };
-      });
-    };
-
-    _this.clickMine = function () {
-      _this.setState(function (prevState) {
-        return {
-          numberOfMines: prevState.numberOfMines + 1,
-          toActiveMine: prevState.toActiveMine * 2,
-          numberOfCookies: prevState.numberOfCookies - _this.state.toActiveMine,
-          cookiesMine: prevState.cookiesMine + 260,
-          producePerSec: prevState.producePerSec + 260
-        };
-      });
-    };
-
-    _this.state = _this.loadGame() == null ? gameState : _this.loadGame();
+    _this.state = _this.loadGame() == null ? gameScore : _this.loadGame();
     return _this;
   }
 
@@ -22290,8 +22242,8 @@ var Game = function (_React$Component) {
       this.intervalId = setInterval(function () {
         _this2.setState(function (prevState) {
           return {
-            numberOfCookies: prevState.numberOfCookies + (_this2.state.cookiesCursor + _this2.state.cookiesGrandma + _this2.state.cookiesFarm + _this2.state.cookiesBakery + _this2.state.cookiesMine),
-            cookiesMade: prevState.cookiesMade + (_this2.state.cookiesCursor + _this2.state.cookiesGrandma + _this2.state.cookiesFarm + _this2.state.cookiesBakery + _this2.state.cookiesMine)
+            numberOfCookies: prevState.numberOfCookies + _this2.state.producePerSec,
+            cookiesMade: prevState.cookiesMade + _this2.state.producePerSec
           };
         });
       }, 1000);
@@ -22311,22 +22263,10 @@ var Game = function (_React$Component) {
     // COOKIE BUTTON
 
 
+    // PRODUCER BUTTON
+
+
     // NEW GAME BUTTON
-
-
-    // CURSOR BUTTON
-
-
-    // GRANDMA BUTTON
-
-
-    // FARM BUTTON
-
-
-    // BAKERY BUTTON
-
-
-    // MINE BUTTON
 
   }, {
     key: 'render',
@@ -22334,22 +22274,7 @@ var Game = function (_React$Component) {
       var _state = this.state,
           numberOfCookies = _state.numberOfCookies,
           producePerSec = _state.producePerSec,
-          cookiesMade = _state.cookiesMade,
-          numberOfCursors = _state.numberOfCursors,
-          toActiveCursor = _state.toActiveCursor,
-          cookiesCursor = _state.cookiesCursor,
-          numberOfGrandmas = _state.numberOfGrandmas,
-          toActiveGrandma = _state.toActiveGrandma,
-          cookiesGrandma = _state.cookiesGrandma,
-          numberOfFarms = _state.numberOfFarms,
-          toActiveFarm = _state.toActiveFarm,
-          cookiesFarm = _state.cookiesFarm,
-          numberOfBakeries = _state.numberOfBakeries,
-          toActiveBakery = _state.toActiveBakery,
-          cookiesBakery = _state.cookiesBakery,
-          numberOfMines = _state.numberOfMines,
-          toActiveMine = _state.toActiveMine,
-          cookiesMine = _state.cookiesMine;
+          cookiesMade = _state.cookiesMade;
 
 
       return _react2.default.createElement(
@@ -22359,14 +22284,8 @@ var Game = function (_React$Component) {
         _react2.default.createElement(
           'div',
           { className: 'game_nav' },
-          _react2.default.createElement(_Cookie2.default, { onClick: this.handleClick }),
-          _react2.default.createElement(_Store2.default, {
-            numberOfCookies: numberOfCookies,
-            clickCursor: this.clickCursor, clickGrandma: this.clickGrandma, clickFarm: this.clickFarm, clickBakery: this.clickBakery, clickMine: this.clickMine,
-            numberOfCursors: numberOfCursors, numberOfGrandmas: numberOfGrandmas, numberOfFarms: numberOfFarms, numberOfBakeries: numberOfBakeries, numberOfMines: numberOfMines,
-            toActiveCursor: toActiveCursor, toActiveGrandma: toActiveGrandma, toActiveFarm: toActiveFarm, toActiveBakery: toActiveBakery, toActiveMine: toActiveMine,
-            cookiesCursor: cookiesCursor, cookiesGrandma: cookiesGrandma, cookiesFarm: cookiesFarm, cookiesBakery: cookiesBakery, cookiesMine: cookiesMine
-          })
+          _react2.default.createElement(_Cookie2.default, { onClick: this.clickCookie }),
+          _react2.default.createElement(_Store2.default, { numberOfCookies: numberOfCookies, clickProducer: this.clickProducer, producers: producers })
         ),
         _react2.default.createElement(
           'button',
@@ -22471,14 +22390,14 @@ var Store = function (_React$Component) {
   _createClass(Store, [{
     key: 'render',
     value: function render() {
+      var _this2 = this;
+
       return _react2.default.createElement(
         'div',
         { className: 'store' },
-        _react2.default.createElement(_Producer2.default, { name: 'Cursor', img: '004-pay-per-click.png', numberOfCookies: this.props.numberOfCookies, clickBtn: this.props.clickCursor, numberOfElements: this.props.numberOfCursors, toActiveBtn: this.props.toActiveCursor, producePerSec: this.props.cookiesCursor }),
-        _react2.default.createElement(_Producer2.default, { name: 'Grandma', img: '005-old-woman.png', numberOfCookies: this.props.numberOfCookies, clickBtn: this.props.clickGrandma, numberOfElements: this.props.numberOfGrandmas, toActiveBtn: this.props.toActiveGrandma, producePerSec: this.props.cookiesGrandma }),
-        _react2.default.createElement(_Producer2.default, { name: 'Farm', img: '003-sprout.png', numberOfCookies: this.props.numberOfCookies, clickBtn: this.props.clickFarm, numberOfElements: this.props.numberOfFarms, toActiveBtn: this.props.toActiveFarm, producePerSec: this.props.cookiesFarm }),
-        _react2.default.createElement(_Producer2.default, { name: 'Bakery', img: '002-business.png', numberOfCookies: this.props.numberOfCookies, clickBtn: this.props.clickBakery, numberOfElements: this.props.numberOfBakeries, toActiveBtn: this.props.toActiveBakery, producePerSec: this.props.cookiesBakery }),
-        _react2.default.createElement(_Producer2.default, { name: 'Mine', img: '001-transport.png', numberOfCookies: this.props.numberOfCookies, clickBtn: this.props.clickMine, numberOfElements: this.props.numberOfMines, toActiveBtn: this.props.toActiveMine, producePerSec: this.props.cookiesMine })
+        this.props.producers.map(function (producer) {
+          return _react2.default.createElement(_Producer2.default, { key: producer.name, clickBtn: _this2.props.clickProducer, producer: producer, numberOfCookies: _this2.props.numberOfCookies });
+        })
       );
     }
   }]);
@@ -22517,10 +22436,28 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 var Producer = function (_React$Component) {
   _inherits(Producer, _React$Component);
 
-  function Producer() {
+  function Producer(props) {
     _classCallCheck(this, Producer);
 
-    return _possibleConstructorReturn(this, (Producer.__proto__ || Object.getPrototypeOf(Producer)).apply(this, arguments));
+    var _this = _possibleConstructorReturn(this, (Producer.__proto__ || Object.getPrototypeOf(Producer)).call(this, props));
+
+    _this.handleClick = function () {
+      _this.setState(function (prevState) {
+        return {
+          production: prevState.production + _this.props.producer.productionPerSec,
+          cost: Math.ceil(prevState.cost * _this.props.producer.multiply),
+          quantity: prevState.quantity + 1
+        };
+      });
+      _this.props.clickBtn(_this.state.cost, _this.props.producer.productionPerSec);
+    };
+
+    _this.state = {
+      production: _this.props.producer.quantity,
+      cost: _this.props.producer.cost,
+      quantity: _this.props.producer.quantity
+    };
+    return _this;
   }
 
   _createClass(Producer, [{
@@ -22531,11 +22468,11 @@ var Producer = function (_React$Component) {
       var producerBtnContent = _react2.default.createElement(
         "div",
         null,
-        _react2.default.createElement("img", { src: "./dist/imagessrc/images/" + this.props.img }),
+        _react2.default.createElement("img", { src: "./dist/imagessrc/images/" + this.props.producer.name + ".png" }),
         _react2.default.createElement(
           "h1",
           null,
-          this.props.name
+          this.props.producer.name
         ),
         _react2.default.createElement(
           "ul",
@@ -22544,31 +22481,31 @@ var Producer = function (_React$Component) {
             "li",
             null,
             "Production: ",
-            this.props.producePerSec,
+            this.state.production,
             " cookies/sec."
           ),
           _react2.default.createElement(
             "li",
             null,
             "For next you need: ",
-            this.props.toActiveBtn,
+            this.state.cost,
             " cookies."
           )
         ),
         _react2.default.createElement(
           "span",
           null,
-          this.props.numberOfElements
+          this.state.quantity
         )
       );
 
-      return this.props.numberOfCookies >= this.props.toActiveBtn ? _react2.default.createElement(
+      return this.props.numberOfCookies >= this.state.cost ? _react2.default.createElement(
         "button",
-        { className: this.props.name.toLowerCase() + " storeBtn", onClick: this.props.clickBtn },
+        { className: this.props.producer.name.toLowerCase() + " storeBtn", onClick: this.handleClick },
         producerBtnContent
       ) : _react2.default.createElement(
         "button",
-        { className: this.props.name.toLowerCase() + " storeBtn", disabled: true, onClick: this.props.clickBtn },
+        { className: this.props.producer.name.toLowerCase() + " storeBtn", disabled: true, onClick: this.handleClick },
         producerBtnContent
       );
     }
