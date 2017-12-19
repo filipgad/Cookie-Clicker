@@ -4,31 +4,34 @@ import Cookie from './Cookie.jsx';
 import Store from './Store.jsx';
 import ScoreBoard from './ScoreBoard.jsx';
 
-const gameState = {
+class Manufacturer {
+  constructor(name, quantity, productionPerSec, cost, multiply) {
+    this.name = name;
+    this.quantity = quantity;
+    this.productionPerSec = productionPerSec;
+    this.cost = cost;
+    this.multiply = multiply;
+  }
+}
+
+let cursor = new Manufacturer("Cursor", 0, 1, 5, 1.15);
+let grandma = new Manufacturer("Grandma", 0, 2, 50, 1.25);
+let farm = new Manufacturer("Farm", 0, 8, 1100, 1.5);
+let bakery = new Manufacturer("Bakery", 0, 47, 12000, 1.75);
+let mine = new Manufacturer("Mine", 0, 260, 130000, 2);
+
+const producers = [cursor, grandma, farm, bakery, mine];
+
+const gameScore = {
   numberOfCookies: 0, // stores the current number of cookies
   producePerSec: 0, // stores the number of produced cookies per second
-  cookiesMade: 0, // stores the number of cookies produced
-  numberOfCursors: 0, // each numberOf... stores the number of producers we have bought
-  toActiveCursor: 5, // each toActive... stores the number of points we need to activate the producer
-  cookiesCursor: 0, // each cookies... stores the number of cookies produced by producer per second
-  numberOfGrandmas: 0,
-  toActiveGrandma: 50,
-  cookiesGrandma: 0,
-  numberOfFarms:0,
-  toActiveFarm: 1100,
-  cookiesFarm: 0,
-  numberOfBakeries: 0,
-  toActiveBakery: 12000,
-  cookiesBakery: 0,
-  numberOfMines: 0,
-  toActiveMine: 130000,
-  cookiesMine: 0
+  cookiesMade: 0 // stores the number of cookies produced
 }
 
 class Game extends React.Component {
   constructor(props) {
     super(props);
-    this.state = this.loadGame() == null ? gameState : this.loadGame();
+    this.state = this.loadGame() == null ? gameScore : this.loadGame();
   }
 
   componentDidUpdate() {
@@ -40,8 +43,8 @@ class Game extends React.Component {
     this.intervalId = setInterval( () => {
       this.setState((prevState) => {
         return {
-          numberOfCookies: prevState.numberOfCookies + (this.state.cookiesCursor + this.state.cookiesGrandma + this.state.cookiesFarm + this.state.cookiesBakery + this.state.cookiesMine),
-          cookiesMade: prevState.cookiesMade + (this.state.cookiesCursor + this.state.cookiesGrandma + this.state.cookiesFarm + this.state.cookiesBakery + this.state.cookiesMine)
+          numberOfCookies: prevState.numberOfCookies + this.state.producePerSec,
+          cookiesMade: prevState.cookiesMade + this.state.producePerSec
         }
       });
     }, 1000);
@@ -62,7 +65,7 @@ class Game extends React.Component {
   }
 
   // COOKIE BUTTON
-  handleClick = () => {
+  clickCookie = () => {
     this.setState((prevState) => {
       return {
         cookiesMade: prevState.cookiesMade + 1,
@@ -71,74 +74,19 @@ class Game extends React.Component {
     });
   }
 
+  // PRODUCER BUTTON
+  clickProducer = (cost, production) => {
+    this.setState((prevState) => {
+      return {
+        numberOfCookies: prevState.numberOfCookies - cost,
+        producePerSec: prevState.producePerSec + production
+      }
+    });
+  }
+
   // NEW GAME BUTTON
   clickNewGame = () => {
-    this.state = gameState;
-  }
-
-  // CURSOR BUTTON
-  clickCursor = () => {
-    this.setState((prevState) => {
-      return {
-        numberOfCursors: prevState.numberOfCursors + 1,
-        toActiveCursor: Math.ceil(prevState.toActiveCursor * 1.15),
-        numberOfCookies: prevState.numberOfCookies - this.state.toActiveCursor,
-        cookiesCursor: prevState.cookiesCursor + 1,
-        producePerSec: prevState.producePerSec + 1
-      }
-    });
-  }
-
-  // GRANDMA BUTTON
-  clickGrandma = () => {
-    this.setState((prevState) => {
-      return {
-        numberOfGrandmas: prevState.numberOfGrandmas + 1,
-        toActiveGrandma: Math.ceil(prevState.toActiveGrandma * 1.25),
-        numberOfCookies: prevState.numberOfCookies - this.state.toActiveGrandma,
-        cookiesGrandma: prevState.cookiesGrandma + 2,
-        producePerSec: prevState.producePerSec + 2
-      }
-    });
-  }
-
-  // FARM BUTTON
-  clickFarm = () => {
-    this.setState((prevState) => {
-      return {
-        numberOfFarms: prevState.numberOfFarms + 1,
-        toActiveFarm: Math.ceil(prevState.toActiveFarm * 1.5),
-        numberOfCookies: prevState.numberOfCookies - this.state.toActiveFarm,
-        cookiesFarm: prevState.cookiesFarm + 8,
-        producePerSec: prevState.producePerSec + 8
-      }
-    });
-  }
-
-  // BAKERY BUTTON
-  clickBakery = () => {
-    this.setState((prevState) => {
-      return {
-        numberOfBakeries: prevState.numberOfBakeries + 1,
-        toActiveBakery: Math.ceil(prevState.toActiveBakery * 1.75),
-        numberOfCookies: prevState.numberOfCookies - this.state.toActiveBakery,
-        cookiesBakery: prevState.cookiesBakery + 47,
-        producePerSec: prevState.producePerSec + 47
-      }
-    });
-  }
-
-  // MINE BUTTON
-  clickMine = () => {
-    this.setState((prevState) => {
-      return {
-        numberOfMines: prevState.numberOfMines + 1,
-        toActiveMine: prevState.toActiveMine * 2,
-        numberOfCookies: prevState.numberOfCookies - this.state.toActiveMine,
-        cookiesMine: prevState.cookiesMine + 260,
-        producePerSec: prevState.producePerSec + 260
-      }
-    });
+    this.state = gameScore;
   }
 
   render() {
@@ -146,36 +94,15 @@ class Game extends React.Component {
     const {
       numberOfCookies,
       producePerSec,
-      cookiesMade,
-      numberOfCursors,
-      toActiveCursor,
-      cookiesCursor,
-      numberOfGrandmas,
-      toActiveGrandma,
-      cookiesGrandma,
-      numberOfFarms,
-      toActiveFarm,
-      cookiesFarm,
-      numberOfBakeries,
-      toActiveBakery,
-      cookiesBakery,
-      numberOfMines,
-      toActiveMine,
-      cookiesMine
+      cookiesMade
     } = this.state;
 
     return (
       <div className="game">
         <ScoreBoard numberOfCookies={numberOfCookies} producePerSec={producePerSec} cookiesMade={cookiesMade}  />
         <div className="game_nav">
-          <Cookie onClick={this.handleClick} />
-          <Store
-            numberOfCookies={numberOfCookies}
-            clickCursor={this.clickCursor} clickGrandma={this.clickGrandma} clickFarm={this.clickFarm} clickBakery={this.clickBakery} clickMine={this.clickMine}
-            numberOfCursors={numberOfCursors} numberOfGrandmas={numberOfGrandmas} numberOfFarms={numberOfFarms} numberOfBakeries={numberOfBakeries} numberOfMines={numberOfMines}
-            toActiveCursor={toActiveCursor} toActiveGrandma={toActiveGrandma} toActiveFarm={toActiveFarm} toActiveBakery={toActiveBakery} toActiveMine={toActiveMine}
-            cookiesCursor={cookiesCursor} cookiesGrandma={cookiesGrandma} cookiesFarm={cookiesFarm} cookiesBakery={cookiesBakery} cookiesMine={cookiesMine}
-          />
+          <Cookie onClick={this.clickCookie} />
+          <Store numberOfCookies={numberOfCookies} clickProducer={this.clickProducer} producers={producers} />
         </div>
         <button className="newGame" onClick={this.clickNewGame}>NEW GAME</button>
       </div>
