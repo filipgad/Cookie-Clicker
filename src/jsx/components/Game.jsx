@@ -21,6 +21,7 @@ let bakery = new Manufacturer("Bakery", 0, 47, 12000, 1.75);
 let mine = new Manufacturer("Mine", 0, 260, 130000, 2);
 
 const producers = [cursor, grandma, farm, bakery, mine];
+console.log(producers);
 
 const gameScore = {
   numberOfCookies: 0, // stores the current number of cookies
@@ -64,7 +65,7 @@ class Game extends React.Component {
       return JSON.parse(localStorage.getItem('cookieClickerData'));
   }
 
-  // COOKIE BUTTON
+  // COOKIE BUTTON ACTION
   clickCookie = () => {
     this.setState((prevState) => {
       return {
@@ -74,7 +75,7 @@ class Game extends React.Component {
     });
   }
 
-  // PRODUCER BUTTON
+  // PRODUCER BUTTON ACTION
   clickProducer = (cost, production) => {
     this.setState((prevState) => {
       return {
@@ -84,7 +85,7 @@ class Game extends React.Component {
     });
   }
 
-  // NEW GAME BUTTON
+  // NEW GAME BUTTON ACTION
   clickNewGame = () => {
     this.state = gameScore;
   }
@@ -108,6 +109,40 @@ class Game extends React.Component {
       </div>
     );
   }
+}
+
+
+// This works on all devices/browsers, and uses IndexedDBShim as a final fallback
+var indexedDB = window.indexedDB || window.mozIndexedDB || window.webkitIndexedDB || window.msIndexedDB || window.shimIndexedDB;
+
+// Open (or create) the database
+var open = indexedDB.open("CookieClickerData", 1);
+
+// Create the schema
+open.onupgradeneeded = function() {
+    var db = open.result;
+    var storeProducer = db.createObjectStore("producerData", {keyPath: "name"});
+};
+
+open.onsuccess = function() {
+    // Start a new transaction
+    var db = open.result;
+    var tx = db.transaction("producerData", "readwrite");
+    var store = tx.objectStore("producerData");
+
+    // Add some data
+    producers.forEach(producer => { return store.put(producer)});
+
+
+    var getBakery = store.get("Bakery");
+    getBakery.onsuccess = function() {
+      console.log(getBakery.result);
+    }
+
+    // Close the db when the transaction is done
+    tx.oncomplete = function() {
+        db.close();
+    };
 }
 
 export default Game;
