@@ -20,8 +20,10 @@ let bakery = new Manufacturer("Bakery", 0, 47, 12000);
 let mine = new Manufacturer("Mine", 0, 260, 130000);
 
 const producers = [cursor, grandma, farm, bakery, mine];
+console.log(producers[0]);
 
 const gameScore = {
+  name: "CookieScore",
   numberOfCookies: 0, // stores the current number of cookies
   producePerSec: 0, // stores the number of produced cookies per second
   cookiesMade: 0 // stores the number of cookies produced
@@ -130,6 +132,7 @@ open.onsuccess = function() {
 
     // Add some data
     producers.forEach(producer => { return store.put(producer)});
+    store.put(gameScore);
 
 
     var getBakery = store.get("Bakery");
