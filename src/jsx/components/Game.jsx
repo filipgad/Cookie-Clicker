@@ -5,23 +5,21 @@ import Store from './Store.jsx';
 import ScoreBoard from './ScoreBoard.jsx';
 
 class Manufacturer {
-  constructor(name, quantity, productionPerSec, cost, multiply) {
+  constructor(name, quantity, productionPerSec, cost) {
     this.name = name;
     this.quantity = quantity;
     this.productionPerSec = productionPerSec;
     this.cost = cost;
-    this.multiply = multiply;
   }
 }
 
-let cursor = new Manufacturer("Cursor", 0, 1, 5, 1.15);
-let grandma = new Manufacturer("Grandma", 0, 2, 50, 1.25);
-let farm = new Manufacturer("Farm", 0, 8, 1100, 1.5);
-let bakery = new Manufacturer("Bakery", 0, 47, 12000, 1.75);
-let mine = new Manufacturer("Mine", 0, 260, 130000, 2);
+let cursor = new Manufacturer("Cursor", 0, 0.1, 15);
+let grandma = new Manufacturer("Grandma", 0, 1, 100);
+let farm = new Manufacturer("Farm", 0, 8, 1100);
+let bakery = new Manufacturer("Bakery", 0, 47, 12000);
+let mine = new Manufacturer("Mine", 0, 260, 130000);
 
 const producers = [cursor, grandma, farm, bakery, mine];
-console.log(producers);
 
 const gameScore = {
   numberOfCookies: 0, // stores the current number of cookies

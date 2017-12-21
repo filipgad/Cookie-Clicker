@@ -15,7 +15,7 @@ class Producer extends React.Component {
     this.setState((prevState) => {
       return {
         production: prevState.production + this.props.producer.productionPerSec,
-        cost: Math.ceil(prevState.cost * this.props.producer.multiply),
+        cost: Math.ceil(prevState.cost * 1.15),
         quantity: prevState.quantity + 1
       }
     });
@@ -29,7 +29,7 @@ class Producer extends React.Component {
                                   <img src={"./dist/imagessrc/images/" + this.props.producer.name + ".png"} />
                                   <h1>{this.props.producer.name}</h1>
                                   <ul>
-                                    <li>Production: {this.state.production} cookies/sec.</li>
+                                    <li>Production: {this.props.producer.name == "Cursor" ? this.state.production.toFixed(1) : this.state.production} cookies/sec.</li>
                                     <li>For next you need: {this.state.cost} cookies.</li>
                                   </ul>
                                   <span>{this.state.quantity}</span>
