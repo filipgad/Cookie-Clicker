@@ -3,41 +3,18 @@ import React from 'react';
 import Cookie from './Cookie.jsx';
 import Store from './Store.jsx';
 import ScoreBoard from './ScoreBoard.jsx';
-
-class Manufacturer {
-  constructor(name, quantity, productionPerSec, cost) {
-    this.name = name;
-    this.quantity = quantity;
-    this.productionPerSec = productionPerSec;
-    this.cost = cost;
-  }
-}
-
-let cursor = new Manufacturer("Cursor", 0, 0.1, 15);
-let grandma = new Manufacturer("Grandma", 0, 1, 100);
-let farm = new Manufacturer("Farm", 0, 8, 1100);
-let bakery = new Manufacturer("Bakery", 0, 47, 12000);
-let mine = new Manufacturer("Mine", 0, 260, 130000);
-
-const producers = [cursor, grandma, farm, bakery, mine];
-console.log(producers[0]);
-
-const gameScore = {
-  name: "CookieScore",
-  numberOfCookies: 0, // stores the current number of cookies
-  producePerSec: 0, // stores the number of produced cookies per second
-  cookiesMade: 0 // stores the number of cookies produced
-}
+import { producers, gameScore } from '../initial_game_data.js';
+import { updateGameScoreData, getGameScoreData } from '../indexedDB.js';
 
 class Game extends React.Component {
   constructor(props) {
     super(props);
-    this.state = this.loadGame() == null ? gameScore : this.loadGame();
+    this.state =  gameScore;
   }
 
   componentDidUpdate() {
     // after every update save new state value
-    this.saveGame(this.state);
+    updateGameScoreData(gameScore.name, [this.state.numberOfCookies, this.state.producePerSec, this.state.cookiesMade])
   }
 
   componentDidMount() {
@@ -53,16 +30,6 @@ class Game extends React.Component {
 
   componentWillUnmount() {
     clearInterval(this.intervalId);
-  }
-
-  // localStorage save
-  saveGame = (state) => {
-      localStorage.setItem('cookieClickerData', JSON.stringify(state));
-  }
-
-  // localStorage load
-  loadGame = () => {
-      return JSON.parse(localStorage.getItem('cookieClickerData'));
   }
 
   // COOKIE BUTTON ACTION
@@ -85,10 +52,10 @@ class Game extends React.Component {
     });
   }
 
-  // NEW GAME BUTTON ACTION
-  clickNewGame = () => {
-    this.state = gameScore;
-  }
+  // // NEW GAME BUTTON ACTION
+  // clickNewGame = () => {
+  //   this.state = gameScore;
+  // }
 
   render() {
 
@@ -109,41 +76,6 @@ class Game extends React.Component {
       </div>
     );
   }
-}
-
-
-// This works on all devices/browsers, and uses IndexedDBShim as a final fallback
-var indexedDB = window.indexedDB || window.mozIndexedDB || window.webkitIndexedDB || window.msIndexedDB || window.shimIndexedDB;
-
-// Open (or create) the database
-var open = indexedDB.open("CookieClickerData", 1);
-
-// Create the schema
-open.onupgradeneeded = function() {
-    var db = open.result;
-    var storeProducer = db.createObjectStore("producerData", {keyPath: "name"});
-};
-
-open.onsuccess = function() {
-    // Start a new transaction
-    var db = open.result;
-    var tx = db.transaction("producerData", "readwrite");
-    var store = tx.objectStore("producerData");
-
-    // Add some data
-    producers.forEach(producer => { return store.put(producer)});
-    store.put(gameScore);
-
-
-    var getBakery = store.get("Bakery");
-    getBakery.onsuccess = function() {
-      console.log(getBakery.result);
-    }
-
-    // Close the db when the transaction is done
-    tx.oncomplete = function() {
-        db.close();
-    };
 }
 
 export default Game;

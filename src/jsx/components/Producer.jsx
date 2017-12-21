@@ -1,4 +1,5 @@
 import React from 'react';
+import { updateProducerData, getProducerData } from '../indexedDB.js';
 
 // Button with producer
 class Producer extends React.Component {
@@ -9,6 +10,11 @@ class Producer extends React.Component {
       cost: this.props.producer.cost,
       quantity: this.props.producer.quantity
     }
+  }
+
+  componentDidUpdate() {
+    // after every update save new state value
+    updateProducerData(this.props.producer.name, [this.state.production, this.state.cost, this.state.quantity])
   }
 
   handleClick = () => {
