@@ -14,15 +14,14 @@ class Game extends React.Component {
 
   componentDidUpdate() {
     // after every update save new state value
-    updateGameScoreData(gameScore.name, [this.state.numberOfCookies, this.state.producePerSec, this.state.cookiesMade])
+    updateGameScoreData(gameScore.name, [this.state.numberOfCookies, this.state.producePerSec])
   }
 
   componentDidMount() {
     this.intervalId = setInterval( () => {
       this.setState((prevState) => {
         return {
-          numberOfCookies: prevState.numberOfCookies + this.state.producePerSec,
-          cookiesMade: prevState.cookiesMade + this.state.producePerSec
+          numberOfCookies: prevState.numberOfCookies + this.state.producePerSec
         }
       });
     }, 1000);
@@ -36,7 +35,6 @@ class Game extends React.Component {
   clickCookie = () => {
     this.setState((prevState) => {
       return {
-        cookiesMade: prevState.cookiesMade + 1,
         numberOfCookies: prevState.numberOfCookies + 1
       }
     });
@@ -61,13 +59,12 @@ class Game extends React.Component {
 
     const {
       numberOfCookies,
-      producePerSec,
-      cookiesMade
+      producePerSec
     } = this.state;
 
     return (
       <div className="game">
-        <ScoreBoard numberOfCookies={numberOfCookies} producePerSec={producePerSec} cookiesMade={cookiesMade}  />
+        <ScoreBoard numberOfCookies={numberOfCookies} producePerSec={producePerSec} />
         <div className="game_nav">
           <Cookie onClick={this.clickCookie} />
           <Store numberOfCookies={numberOfCookies} clickProducer={this.clickProducer} producers={producers} />

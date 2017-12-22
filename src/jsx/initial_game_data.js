@@ -18,6 +18,5 @@ export const producers = [cursor, grandma, farm, bakery, mine];
 export const gameScore = {
   name: "CookieScore",
   numberOfCookies: 0, // stores the current number of cookies
-  producePerSec: 0, // stores the number of produced cookies per second
-  cookiesMade: 0 // stores the number of cookies produced
+  producePerSec: 0 // stores the number of produced cookies per second
 }

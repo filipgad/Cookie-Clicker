@@ -34,7 +34,7 @@ open.onupgradeneeded = (event) => {
 };
 
 // GAME SCORE UPDATE IN DATABASE
-export const updateGameScoreData = (name, [numberOfCookies, producePerSec, cookiesMade]) => {
+export const updateGameScoreData = (name, [numberOfCookies, producePerSec]) => {
   var tx = db.transaction("cookieGameData", "readwrite");
   var store = tx.objectStore("cookieGameData");
 
@@ -44,7 +44,6 @@ export const updateGameScoreData = (name, [numberOfCookies, producePerSec, cooki
     var data = event.target.result;
     data.numberOfCookies = numberOfCookies;
     data.producePerSec = producePerSec;
-    data.cookiesMade = cookiesMade;
 
     var updateScore = store.put(data);
   }
