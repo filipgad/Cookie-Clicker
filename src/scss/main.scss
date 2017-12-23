@@ -104,21 +104,6 @@ body {
   }
 }
 
-.newGame {
-  background-color: #325185;
-  border: 3px solid #fff;
-  color: #fff;
-  font-size: 1.5rem;
-  padding: 10px 15px;
-  &:hover {
-    color: #B4CAB5;
-    border: 3px solid #B4CAB5;
-  }
-  &:focus {
-    outline: none;
-  }
-}
-
 .cookieInfo {
   left: 0;
   top: 0;

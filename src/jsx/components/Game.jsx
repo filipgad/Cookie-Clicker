@@ -68,11 +68,6 @@ class Game extends React.Component {
     });
   }
 
-  // NEW GAME BUTTON ACTION
-  clickNewGame = () => {
-    this.state = gameScore;
-  }
-
   render() {
 
     const {
@@ -87,7 +82,6 @@ class Game extends React.Component {
           <Cookie onClick={this.clickCookie} />
           <Store numberOfCookies={numberOfCookies} clickProducer={this.clickProducer} producers={producers} />
         </div>
-        <button className="newGame" onClick={this.clickNewGame}>NEW GAME</button>
       </div>
     );
   }
