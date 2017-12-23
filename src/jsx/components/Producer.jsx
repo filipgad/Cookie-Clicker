@@ -10,6 +10,8 @@ class Producer extends React.Component {
       cost: this.props.producer.cost,
       quantity: this.props.producer.quantity
     }
+
+    // LOAD PRODUCER DATA FROM INDEXEDDB
     const open = indexedDB.open("CookieClickerData", 1);
     open.onsuccess = (event) => {
       const db = event.target.result;
@@ -20,7 +22,7 @@ class Producer extends React.Component {
       request.onsuccess = (event) => {
         this.setState( () => {
           return {
-            production: event.target.result.productionPerSec,
+            production: event.target.result.quantity > 0 ? event.target.result.productionPerSec : 0,
             cost: event.target.result.cost,
             quantity: event.target.result.quantity
           }

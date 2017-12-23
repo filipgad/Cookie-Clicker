@@ -10,6 +10,8 @@ class Game extends React.Component {
   constructor(props) {
     super(props);
     this.state = gameScore;
+
+    // LOAD GAME SCORE DATA FROM INDEXEDDB
     const open = indexedDB.open("CookieClickerData", 1);
     open.onsuccess = (event) => {
       const db = event.target.result;
