@@ -1,5 +1,5 @@
 import React from 'react';
-import { updateProducerData, getProducerData } from '../indexedDB.js';
+import { updateProducerData, loadProducerData } from '../indexedDB.js';
 
 // Button with producer
 class Producer extends React.Component {
@@ -10,6 +10,23 @@ class Producer extends React.Component {
       cost: this.props.producer.cost,
       quantity: this.props.producer.quantity
     }
+    const open = indexedDB.open("CookieClickerData", 1);
+    open.onsuccess = (event) => {
+      const db = event.target.result;
+      const tx = db.transaction("cookieGameData");
+      const store = tx.objectStore("cookieGameData");
+      const request = store.get(this.props.producer.name);
+
+      request.onsuccess = (event) => {
+        this.setState( () => {
+          return {
+            production: event.target.result.productionPerSec,
+            cost: event.target.result.cost,
+            quantity: event.target.result.quantity
+          }
+        });
+      };
+    };
   }
 
   componentDidUpdate() {

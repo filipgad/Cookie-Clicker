@@ -1,11 +1,11 @@
 import { gameScore, producers } from './initial_game_data.js';
 
-// This works on all devices/browsers, and uses IndexedDBShim as a final fallback
-var indexedDB = window.indexedDB || window.mozIndexedDB || window.webkitIndexedDB || window.msIndexedDB || window.shimIndexedDB;
+// // This works on all devices/browsers, and uses IndexedDBShim as a final fallback
+// var indexedDB = window.indexedDB || window.mozIndexedDB || window.webkitIndexedDB || window.msIndexedDB || window.shimIndexedDB;
 
 var db;
 // Open database
-var open = window.indexedDB.open("CookieClickerData", 1);
+var open = indexedDB.open("CookieClickerData", 1);
 
 open.onerror = (event) => {
   alert("Database error: " + event.target.errorCode);
@@ -39,6 +39,7 @@ export const updateGameScoreData = (name, [numberOfCookies, producePerSec]) => {
   var store = tx.objectStore("cookieGameData");
 
   var gameScoreData = store.get(name);
+  console.log(gameScoreData);
 
   gameScoreData.onsuccess = (event) => {
     var data = event.target.result;
@@ -49,15 +50,22 @@ export const updateGameScoreData = (name, [numberOfCookies, producePerSec]) => {
   }
 }
 
-// export const getGameScoreData = (name) => {
-//   var tx = db.transaction("cookieGameData");
-//   var store = tx.objectStore("cookieGameData");
+// // GAME SCORE LOAD FROM DATABASE (problem with "this")
+// export const loadGameScoreData = (name) => {
+//   const open = indexedDB.open("CookieClickerData", 1);
+//   open.onsuccess = (event) => {
+//     const db = event.target.result;
+//     const tx = db.transaction("cookieGameData");
+//     const store = tx.objectStore("cookieGameData");
+//     const request = store.get(gameScore.name);
 //
-//   var gameScoreData = store.get(name);
-//
-//   gameScoreData.onsuccess = () => {
-//     return gameScoreData.result;
-//   }
+//     request.onsuccess = (event) => {
+//       this.setState(() => ({
+//         numberOfCookies: event.target.result.numberOfCookies,
+//         producePerSec: event.target.result.producePerSec
+//       }));
+//     };
+//   };
 // }
 
 // PRODUCER UPDATE IN DATABASE
@@ -77,11 +85,21 @@ export const updateProducerData = (name, [production, cost, quantity]) => {
   }
 }
 
-// export const getProducerData = (name) => {
-//   var tx = db.transaction("cookieGameData", "readwrite");
-//   var store = tx.objectStore("cookieGameData");
+// // PRODUCER LOAD FROM DATABASE (problem with "this")
+// export const loadProducerData = (name) => {
+//   const open = indexedDB.open("CookieClickerData", 1);
+//   open.onsuccess = (event) => {
+//     const db = event.target.result;
+//     const tx = db.transaction("cookieGameData");
+//     const store = tx.objectStore("cookieGameData");
+//     const request = store.get(name);
 //
-//   var producerData = store.get(name);
-//
-//   return producerData;
+//     request.onsuccess = (event) => {
+//       this.setState(() => ({
+//         production: event.target.result.productionPerSec,
+//         cost: event.target.result.cost,
+//         quantity: event.target.result.quantity,
+//       }));
+//     };
+//   };
 // }

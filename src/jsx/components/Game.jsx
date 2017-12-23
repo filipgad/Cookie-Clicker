@@ -4,17 +4,33 @@ import Cookie from './Cookie.jsx';
 import Store from './Store.jsx';
 import ScoreBoard from './ScoreBoard.jsx';
 import { producers, gameScore } from '../initial_game_data.js';
-import { updateGameScoreData, getGameScoreData } from '../indexedDB.js';
+import { updateGameScoreData, loadGameScoreData } from '../indexedDB.js';
 
 class Game extends React.Component {
   constructor(props) {
     super(props);
-    this.state =  gameScore;
+    this.state = gameScore;
+    const open = indexedDB.open("CookieClickerData", 1);
+    open.onsuccess = (event) => {
+      const db = event.target.result;
+      const tx = db.transaction("cookieGameData");
+      const store = tx.objectStore("cookieGameData");
+      const request = store.get(gameScore.name);
+
+      request.onsuccess = (event) => {
+        this.setState( () => {
+          return {
+            numberOfCookies: event.target.result.numberOfCookies,
+            producePerSec: event.target.result.producePerSec
+          }
+        });
+      };
+    };
   }
 
   componentDidUpdate() {
     // after every update save new state value
-    updateGameScoreData(gameScore.name, [this.state.numberOfCookies, this.state.producePerSec])
+    updateGameScoreData(gameScore.name, [this.state.numberOfCookies, this.state.producePerSec]);
   }
 
   componentDidMount() {
@@ -50,10 +66,10 @@ class Game extends React.Component {
     });
   }
 
-  // // NEW GAME BUTTON ACTION
-  // clickNewGame = () => {
-  //   this.state = gameScore;
-  // }
+  // NEW GAME BUTTON ACTION
+  clickNewGame = () => {
+    this.state = gameScore;
+  }
 
   render() {
 
