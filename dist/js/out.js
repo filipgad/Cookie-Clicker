@@ -6485,11 +6485,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 
 // // This works on all devices/browsers, and uses IndexedDBShim as a final fallback
-// var indexedDB = window.indexedDB || window.mozIndexedDB || window.webkitIndexedDB || window.msIndexedDB || window.shimIndexedDB;
+const indexedDB = window.indexedDB || window.mozIndexedDB || window.webkitIndexedDB || window.msIndexedDB || window.shimIndexedDB;
 
-var db;
+let db;
 // Open database
-var open = indexedDB.open("CookieClickerData", 1);
+const open = indexedDB.open("CookieClickerData", 1);
 
 open.onerror = (event) => {
   alert("Database error: " + event.target.errorCode);
@@ -6497,100 +6497,61 @@ open.onerror = (event) => {
 
 open.onsuccess = (event) => {
   db = event.target.result;
-};
-
+}
 
 open.onupgradeneeded = (event) => {
   //The IDBDatabase interface
-  var db = event.target.result;
+  const db = event.target.result;
 
   // Create an objectStore for this database
-  var objectStore = db.createObjectStore("cookieGameData", { keyPath: "name" });
+  const objectStore = db.createObjectStore("cookieGameData", { keyPath: "name" });
 
   objectStore.transaction.oncomplete = (event) => {
-    var tx = db.transaction("cookieGameData", "readwrite");
-    var store = tx.objectStore("cookieGameData");
+    const tx = db.transaction("cookieGameData", "readwrite");
+    const store = tx.objectStore("cookieGameData");
 
     // Add game data
     __WEBPACK_IMPORTED_MODULE_0__initial_game_data_js__["producers"].forEach(producer => { return store.put(producer)});
     store.put(__WEBPACK_IMPORTED_MODULE_0__initial_game_data_js__["gameScore"]);
-  };
-};
+  }
+}
 
 // GAME SCORE UPDATE IN DATABASE
 const updateGameScoreData = (name, [numberOfCookies, producePerSec]) => {
-  var tx = db.transaction("cookieGameData", "readwrite");
-  var store = tx.objectStore("cookieGameData");
+  const tx = db.transaction("cookieGameData", "readwrite");
+  const store = tx.objectStore("cookieGameData");
 
-  var gameScoreData = store.get(name);
-  console.log(gameScoreData);
+  const gameScoreData = store.get(name);
 
   gameScoreData.onsuccess = (event) => {
-    var data = event.target.result;
+    const data = event.target.result;
     data.numberOfCookies = numberOfCookies;
     data.producePerSec = producePerSec;
 
-    var updateScore = store.put(data);
+    const updateScore = store.put(data);
   }
 }
 /* harmony export (immutable) */ __webpack_exports__["updateGameScoreData"] = updateGameScoreData;
 
 
-// // GAME SCORE LOAD FROM DATABASE (problem with "this")
-// export const loadGameScoreData = (name) => {
-//   const open = indexedDB.open("CookieClickerData", 1);
-//   open.onsuccess = (event) => {
-//     const db = event.target.result;
-//     const tx = db.transaction("cookieGameData");
-//     const store = tx.objectStore("cookieGameData");
-//     const request = store.get(gameScore.name);
-//
-//     request.onsuccess = (event) => {
-//       this.setState(() => ({
-//         numberOfCookies: event.target.result.numberOfCookies,
-//         producePerSec: event.target.result.producePerSec
-//       }));
-//     };
-//   };
-// }
-
 // PRODUCER UPDATE IN DATABASE
 const updateProducerData = (name, [production, cost, quantity]) => {
-  var tx = db.transaction("cookieGameData", "readwrite");
-  var store = tx.objectStore("cookieGameData");
+  const tx = db.transaction("cookieGameData", "readwrite");
+  const store = tx.objectStore("cookieGameData");
 
-  var producerData = store.get(name);
+  const producerData = store.get(name);
 
   producerData.onsuccess = (event) => {
-    var data = event.target.result;
+    const data = event.target.result;
     data.productionPerSec = production;
     data.cost = cost;
     data.quantity = quantity;
 
-    var updateData = store.put(data);
+    const updateProducer = store.put(data);
   }
 }
 /* harmony export (immutable) */ __webpack_exports__["updateProducerData"] = updateProducerData;
 
-
-// // PRODUCER LOAD FROM DATABASE (problem with "this")
-// export const loadProducerData = (name) => {
-//   const open = indexedDB.open("CookieClickerData", 1);
-//   open.onsuccess = (event) => {
-//     const db = event.target.result;
-//     const tx = db.transaction("cookieGameData");
-//     const store = tx.objectStore("cookieGameData");
-//     const request = store.get(name);
-//
-//     request.onsuccess = (event) => {
-//       this.setState(() => ({
-//         production: event.target.result.productionPerSec,
-//         cost: event.target.result.cost,
-//         quantity: event.target.result.quantity,
-//       }));
-//     };
-//   };
-// }
 
 
 /***/ }),
@@ -9726,6 +9687,7 @@ class Manufacturer {
   }
 }
 
+// PRODUCERS
 let cursor = new Manufacturer("Cursor", 0, 0.1, 15);
 let grandma = new Manufacturer("Grandma", 0, 1, 100);
 let farm = new Manufacturer("Farm", 0, 8, 1100);
@@ -9736,6 +9698,7 @@ const producers = [cursor, grandma, farm, bakery, mine];
 /* harmony export (immutable) */ __webpack_exports__["producers"] = producers;
 
 
+// GAME SCORE
 const gameScore = {
   name: "CookieScore",
   numberOfCookies: 0, // stores the current number of cookies
@@ -22345,10 +22308,6 @@ var Game = function (_React$Component) {
       });
     };
 
-    _this.clickNewGame = function () {
-      _this.state = _initial_game_data.gameScore;
-    };
-
     _this.state = _initial_game_data.gameScore;
 
     // LOAD GAME SCORE DATA FROM INDEXEDDB
@@ -22401,9 +22360,6 @@ var Game = function (_React$Component) {
 
     // PRODUCER BUTTON ACTION
 
-
-    // NEW GAME BUTTON ACTION
-
   }, {
     key: 'render',
     value: function render() {
@@ -22421,11 +22377,6 @@ var Game = function (_React$Component) {
           { className: 'game_nav' },
           _react2.default.createElement(_Cookie2.default, { onClick: this.clickCookie }),
           _react2.default.createElement(_Store2.default, { numberOfCookies: numberOfCookies, clickProducer: this.clickProducer, producers: _initial_game_data.producers })
-        ),
-        _react2.default.createElement(
-          'button',
-          { className: 'newGame', onClick: this.clickNewGame },
-          'NEW GAME'
         )
       );
     }
