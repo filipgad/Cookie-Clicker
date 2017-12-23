@@ -1,5 +1,5 @@
 import React from 'react';
-import { updateProducerData, loadProducerData } from '../indexedDB.js';
+import { updateProducerData } from '../indexedDB.js';
 
 // Button with producer
 class Producer extends React.Component {
@@ -27,8 +27,8 @@ class Producer extends React.Component {
             quantity: event.target.result.quantity
           }
         });
-      };
-    };
+      }
+    }
   }
 
   componentDidUpdate() {

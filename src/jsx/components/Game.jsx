@@ -4,7 +4,7 @@ import Cookie from './Cookie.jsx';
 import Store from './Store.jsx';
 import ScoreBoard from './ScoreBoard.jsx';
 import { producers, gameScore } from '../initial_game_data.js';
-import { updateGameScoreData, loadGameScoreData } from '../indexedDB.js';
+import { updateGameScoreData } from '../indexedDB.js';
 
 class Game extends React.Component {
   constructor(props) {
@@ -26,8 +26,8 @@ class Game extends React.Component {
             producePerSec: event.target.result.producePerSec
           }
         });
-      };
-    };
+      }
+    }
   }
 
   componentDidUpdate() {
