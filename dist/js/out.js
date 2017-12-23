@@ -22350,6 +22350,8 @@ var Game = function (_React$Component) {
     };
 
     _this.state = _initial_game_data.gameScore;
+
+    // LOAD GAME SCORE DATA FROM INDEXEDDB
     var open = indexedDB.open("CookieClickerData", 1);
     open.onsuccess = function (event) {
       var db = event.target.result;
@@ -22591,8 +22593,9 @@ var Producer = function (_React$Component) {
       production: _this.props.producer.quantity,
       cost: _this.props.producer.cost,
       quantity: _this.props.producer.quantity
-    };
-    var open = indexedDB.open("CookieClickerData", 1);
+
+      // LOAD PRODUCER DATA FROM INDEXEDDB
+    };var open = indexedDB.open("CookieClickerData", 1);
     open.onsuccess = function (event) {
       var db = event.target.result;
       var tx = db.transaction("cookieGameData");
@@ -22602,7 +22605,7 @@ var Producer = function (_React$Component) {
       request.onsuccess = function (event) {
         _this.setState(function () {
           return {
-            production: event.target.result.productionPerSec,
+            production: event.target.result.quantity > 0 ? event.target.result.productionPerSec : 0,
             cost: event.target.result.cost,
             quantity: event.target.result.quantity
           };
