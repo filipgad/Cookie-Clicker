@@ -1,7 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import Game from './components/Game.jsx';
-import CookieInfo from './components/CookieInfo.jsx';
 import "./indexedDB.js";
 
 document.addEventListener('DOMContentLoaded', function() {
@@ -10,7 +9,6 @@ document.addEventListener('DOMContentLoaded', function() {
     render() {
       return (
         <div>
-          <CookieInfo />
           <Game />
         </div>
       );
